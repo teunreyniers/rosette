@@ -1,25 +1,52 @@
+<script>
+  import About from "./About.svelte";
+  import Privacy from "./Privacy.svelte";
+  import InfoPopup from "./InfoPopup.svelte";
+
+  let showAbout = true;
+  let showPrivacy = false;
+</script>
+
 <style>
   nav {
     background: #eee;
     display: grid;
     grid-template-columns: 1fr auto auto;
-  vertical-align: middle;
+    vertical-align: middle;
+    grid-area: nav;
   }
 
-  a {
-    margin: auto 5px;
+  ul li {
+    margin: auto 10px;
+    list-style-type: none;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  ul li:hover {
+    text-decoration: underline;
   }
 
   .logo {
     text-decoration: none;
     font-size: 2em;
     padding: 5px 10px;
-
   }
 </style>
 
 <nav>
   <div href="/" class="logo">rosette</div>
-  <a href="about">about</a>
-  <a href="privacy">privacy</a>
+  <ul>
+    <li on:click={() => (showAbout = true)}>about</li>
+    <li on:click={() => (showPrivacy = true)}>privacy</li>
+  </ul>
+
 </nav>
+
+<InfoPopup isOpen={showAbout} on:close={() => (showAbout = false)}>
+  <About />
+</InfoPopup>
+
+<InfoPopup isOpen={showPrivacy} on:close={() => (showPrivacy = false)}>
+  <Privacy />
+</InfoPopup>

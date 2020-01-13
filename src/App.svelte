@@ -1,6 +1,8 @@
 <script>
-	import Rosette from "./Rosette.svelte";
-	import Nav from "./Nav.svelte";
+  import Rosette from "./Rosette.svelte";
+  import Options from "./Options.svelte"
+  import Nav from "./Nav.svelte";
+
 
   const sections = [
     {
@@ -26,13 +28,31 @@
       ]
     }
   ];
+
+  
 </script>
 
 <style>
-  
+  .app {
+    display: grid;
+    grid-template: "nav nav" auto "options preview" 1fr / 300px 1fr;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .app {
+      grid-template: "nav" auto "options" 300px "preview" 1fr / 1fr;
+    }
+  }
+
+  .options {
+    grid-area: options;
+  }
 </style>
 
-<main>
-  <Nav></Nav>
+<div class="app">
+  <Nav/>
+
+  <Options/>
   <Rosette {sections} on:cirlcemove={e => console.log(e.detail)} />
-</main>
+</div>
+
