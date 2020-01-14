@@ -43,10 +43,20 @@
 
 </nav>
 
-<InfoPopup isOpen={showAbout} on:close={() => (showAbout = false)}>
+<InfoPopup
+  isOpen={showAbout}
+  on:close={() => (showAbout = false)}
+  background="sandybrown"
+  sidepanel="salmon"
+  close="indianred">
   <About />
 </InfoPopup>
 
-<InfoPopup isOpen={showPrivacy} on:close={() => (showPrivacy = false)}>
+<InfoPopup
+  isOpen={showPrivacy}
+  on:close={() => (showPrivacy = false)}
+  background="rgb(86, 117, 232)"
+  sidepanel="rgb(19, 19, 115)"
+  close="rgb(57, 202, 202)">
   <Privacy />
 </InfoPopup>

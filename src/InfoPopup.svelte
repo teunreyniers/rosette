@@ -3,6 +3,11 @@
   import { fade, fly } from "svelte/transition";
 
   export let isOpen;
+  export let background = "sandybrown";
+  export let sidepanel = "salmon";
+  export let close = "indianred";
+
+  
 
   const dispatch = createEventDispatcher();
 
@@ -14,7 +19,6 @@
 <style>
   .background {
     position: fixed;
-    background: sandybrown;
     width: 100%;
     height: 100%;
     top: 0px;
@@ -42,7 +46,6 @@
   }
 
   .side-image {
-    background: salmon;
   }
 
   .close {
@@ -50,7 +53,6 @@
     right: -21px;
     top: -21px;
     border-radius: 50%;
-    background: indianred;
     color: white;
     width: 42px;
     height: 42px;
@@ -69,12 +71,19 @@
 </style>
 
 {#if isOpen}
-  <div class="background" transition:fade on:click={handleClick} />
+  <div
+    class="background"
+    style="background: {background}"
+    transition:fade={{ duration: 300 }}
+    on:click={handleClick} />
   <div class="holder">
-    <div class="container">
-      <span class="close" on:click={handleClick} />
-      <div class="side-image" />
-      <div transition:fly class="content">
+    <div
+      in:fly={{ x: -200, duration: 400 }}
+      out:fly={{ y: 200, duration: 400 }}
+      class="container">
+      <span class="close" style="background: {close}" on:click={handleClick} />
+      <div class="side-image" style="background: {sidepanel}" />
+      <div class="content">
         <slot />
       </div>
     </div>

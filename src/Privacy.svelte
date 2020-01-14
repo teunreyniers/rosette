@@ -1,4 +1,4 @@
-<h1>Privaty</h1>
+<h1>Privacy</h1>
 
 <p>
   We value your privacy. Therefor no personal data is send to our servers. Even
