@@ -7,8 +7,6 @@
   export let sidepanel = "salmon";
   export let close = "indianred";
 
-  
-
   const dispatch = createEventDispatcher();
 
   function handleClick() {
@@ -22,6 +20,11 @@
     width: 100%;
     height: 100%;
     top: 0px;
+    background-image: url("pictures/star.svg");
+   background-position: -300px center;
+   background-blend-mode: overlay;
+   background-repeat: space;
+   background-size: cover;
   }
 
   .holder {
@@ -34,10 +37,11 @@
   .container {
     position: relative;
     width: 80%;
-    height: 50%;
+    max-width: 800px;
+    min-height: 50%;
     margin: 50px auto;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 30% 1fr;
     background: white;
   }
 
@@ -46,6 +50,8 @@
   }
 
   .side-image {
+    display: block;
+    transition: all 200ms;
   }
 
   .close {
@@ -68,12 +74,18 @@
     justify-content: center;
     line-height: 40px;
   }
+
+  @media only screen and (max-width: 600px) {
+    .container {
+      grid-template-columns: 30px 1fr;
+    }
+  }
 </style>
 
 {#if isOpen}
   <div
     class="background"
-    style="background: {background}"
+    style="background-color: {background}"
     transition:fade={{ duration: 300 }}
     on:click={handleClick} />
   <div class="holder">

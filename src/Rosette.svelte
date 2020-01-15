@@ -31,7 +31,9 @@
 
   const count = parts.length;
   const totalspace = spaces.reduce((a, v) => a + v, 0);
-  const textOffset = ((spaces[devitions] / sumUntil(spaces) - fontSizes.part) / 2) * scale_factor;
+  const textOffset =
+    ((spaces[devitions] / sumUntil(spaces) - fontSizes.part) / 2) *
+    scale_factor;
 
   let selectedCircle = -1;
 
@@ -49,8 +51,6 @@
     const radius = getRadius(devition, offset);
     return `${radius} ${radius}`;
   };
-
-  
 
   function handleMousemove(event) {
     if (selectedCircle >= 0) {
