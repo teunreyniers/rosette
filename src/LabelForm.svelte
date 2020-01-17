@@ -87,11 +87,11 @@
   <div class="body">
     <div>
       <label>Xpos</label>
-      <DragInput size="1" value={label.xpos} on:input={handleInput('xpos')} />
+      <DragInput size="1" min={-Infinity} value={label.xpos} on:input={handleInput('xpos')} />
     </div>
     <div>
       <label>Ypos</label>
-      <DragInput size="1" value={label.ypos} on:input={handleInput('ypos')} />
+      <DragInput size="1" min={-Infinity} value={label.ypos} on:input={handleInput('ypos')} />
     </div>
     <div>
       <label>Size</label>

@@ -110,6 +110,9 @@
       anchor: "middle"
     }
   ];
+  let spaces = [2, 1, 1, 1, 0.7, 0.3];
+
+  let devitions = 4;
 
   $: rosettes = students.map((student, index) => ({
     sections: getSectionByIndex(sections, index),
@@ -271,14 +274,13 @@
         }))
         .filter(p => p.devitions !== "")
     }));
-    //   console.log(r);
     return r;
   }
 
   function handleLabelChange({ detail }) {
     const { action } = detail;
     switch (action) {
-      case "add":
+      case "add":     
         labels = [
           ...labels,
           {
@@ -301,6 +303,25 @@
         break;
       case "delete":
         labels = labels.filter((_, i) => detail.index != i);
+        break;
+      default:
+        break;
+    }
+  }
+
+  function handleSpaceChange({ detail }) {
+    const { action } = detail;
+    switch (action) {
+      case "change":
+        spaces[detail.index] =
+          detail.value === ""
+            ? ""
+            : Math.round(parseFloat(detail.value) * 100) / 100;
+        break;
+      case "devitions":
+        devitions = detail.value === "" ? "" : parseInt(detail.value);
+        const arr = spaces.slice(spaces.length - devitions - 2);
+        spaces = [...Array(devitions + 2 - arr.length).fill(1), ...arr];
         break;
       default:
         break;
@@ -329,14 +350,19 @@
   <Options
     {colors}
     {labels}
+    {spaces}
+    {devitions}
     on:colorChange={handleColorChange}
     on:dataEditor={() => (isEditRecordsOpen = true)}
-    on:labelchange={handleLabelChange} />
+    on:labelchange={handleLabelChange}
+    on:spacechange={handleSpaceChange} />
   <Grid items={rosettes} let:item={rosette} let:index>
     <Rosette
       colors={colors.map(x => x.value)}
       sections={rosette.sections}
       labels={rosette.labels}
+      {spaces}
+      {devitions}
       key={rosette.key} />
   </Grid>
 </div>

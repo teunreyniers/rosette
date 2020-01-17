@@ -34,19 +34,18 @@
     ((spaces[devitions] / sumUntil(spaces) - fontSizes.part) / 2) *
     scale_factor;
 
-  function getRadius(devition, offset = 0) {
-    return (sumUntil(spaces, devition) / totalspace) * scale_factor + offset;
-  }
+  $: raduises = [...Array(spaces.length).keys()].map(
+    d => (sumUntil(spaces, d) / totalspace) * scale_factor
+  );
 
   function getCoordinate(devition, partnumber, offset = 0) {
     const angle = (2 * Math.PI * partnumber) / count + angleoffset;
-    const radius = getRadius(devition, offset);
+    const radius = raduises[devition] + offset;
     return `${radius * Math.cos(angle)} ${radius * Math.sin(angle)}`;
   }
 
-  function getRadius2(devition, offset = 0) {
-    const radius = getRadius(devition, offset);
-    return `${radius} ${radius}`;
+  function x2(what) {
+    return `${what} ${what}`;
   }
 
   function sumUntil(array, index = Infinity) {
@@ -66,21 +65,21 @@
     {#if style === 'piece'}
       <path
         fill={colors[(part.devitions - 1) % colors.length]}
-        d="M{getCoordinate(part.devitions, i)} A{getRadius2(part.devitions)} 1 0
-        1 {getCoordinate(part.devitions, i + 1)} L0 0 Z" />
+        d="M{getCoordinate(part.devitions, i)} A{x2(raduises[part.devitions])} 1
+        0 1 {getCoordinate(part.devitions, i + 1)} L0 0 Z" />
     {:else}
       {#each [...Array(part).keys()].reverse() as devition}
         <path
           style="fill:{devition < part ? colors[devition % colors.length] : 'white'};fill-opacity:{devition < part ? 1 : 0}"
-          d="M{getCoordinate(devition + 1, i)} A{getRadius2(devition + 1)} 1 0 1
-          {getCoordinate(devition + 1, i + 1)} L{getCoordinate(devition, i + 1)}
-          A{getRadius2(devition)} 1 0 0 {getCoordinate(devition, i)} Z" />
+          d="M{getCoordinate(devition + 1, i)} A{x2(raduises[devition + 1])} 1 0
+          1 {getCoordinate(devition + 1, i + 1)} L{getCoordinate(devition, i + 1)}
+          A{x2(raduises[devition])} 1 0 0 {getCoordinate(devition, i)} Z" />
       {/each}
     {/if}
     <!-- Part Text -->
     <path
       id="part-name-{key}-{i}"
-      d="M{getCoordinate(devitions, i, textOffset)} A{getRadius2(devitions, textOffset)}
+      d="M{getCoordinate(devitions, i, textOffset)} A{x2(raduises[devitions] + textOffset)}
       0 0 1 {getCoordinate(devitions, i + 1, textOffset)}"
       fill="none" />
     <text font-size={fontSizes.part * scale_factor}>
@@ -104,7 +103,7 @@
       class="circle"
       cx="0"
       cy="0"
-      r={getRadius(devition + 1)}
+      r={raduises[devition + 1]}
       stroke="#999"
       stroke-width="0.5"
       fill="none" />
@@ -120,7 +119,7 @@
     <!-- Section Text -->
     <path
       id="section-name-{key}-{i}"
-      d="M{getCoordinate(devitions + 1, section_angles[i], textOffset)} A{getRadius2(devitions + 1, textOffset)}
+      d="M{getCoordinate(devitions + 1, section_angles[i], textOffset)} A{x2(raduises[devitions + 1] + textOffset)}
       0 {section_angles[i + 1] - section_angles[i] > 0.5 * count ? 1 : 0} 1 {getCoordinate(devitions + 1, section_angles[i + 1], textOffset)}"
       fill="none" />
 
@@ -135,7 +134,15 @@
   {/each}
   <!-- labels -->
   {#each labels as label, index}
-  <text x={label.xpos} y={label.ypos} font-size={label.size} font-weight={label.weight} rotate={label.angle} text-anchor={label.anchor}>{label.value}</text>
+    <text
+      x={label.xpos}
+      y={label.ypos}
+      font-size={label.size}
+      font-weight={label.weight}
+      rotate={label.angle}
+      text-anchor={label.anchor}>
+      {label.value}
+    </text>
   {/each}
-  <text></text>
+  <text />
 </svg>

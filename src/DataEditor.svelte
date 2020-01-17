@@ -30,6 +30,7 @@
     border: 1px solid #ccc;
     border-radius: 2px;
     overflow: auto;
+    z-index: 200;
   }
 
   .header {
