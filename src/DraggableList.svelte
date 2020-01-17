@@ -13,7 +13,7 @@
         duration: 600,
         easing: quintOut,
         css: t => `
-					transform: ${transform} scale(${t});
+					transform: ${transform} scaleY(${t});
 					opacity: ${t}
 				`
       };

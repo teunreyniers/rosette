@@ -14,7 +14,7 @@
     grid-template-columns: 1fr auto auto;
     vertical-align: middle;
     grid-area: nav;
-    background-image: url("pictures/star.svg");
+    background-image: url("../pictures/star.svg");
     background-origin: border-box;
     background-size: 250px;
     background-repeat: no-repeat;

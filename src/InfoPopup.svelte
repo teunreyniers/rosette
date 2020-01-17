@@ -20,11 +20,12 @@
     width: 100%;
     height: 100%;
     top: 0px;
-    background-image: url("pictures/star.svg");
+    background-image: url("../pictures/star.svg");
    background-position: -300px center;
    background-blend-mode: overlay;
    background-repeat: space;
    background-size: cover;
+   z-index: 100;
   }
 
   .holder {
@@ -32,6 +33,7 @@
     width: 100%;
     height: 100%;
     top: 0px;
+    z-index: 102;
   }
 
   .container {
@@ -43,6 +45,7 @@
     display: grid;
     grid-template-columns: 30% 1fr;
     background: white;
+    
   }
 
   .content {
