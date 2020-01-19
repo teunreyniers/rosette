@@ -110,6 +110,19 @@
       angle: 0,
       anchor: "middle",
       color: "#000000"
+    },
+    {
+      key: CreateUUID(),
+      readonly: false,
+      name: "Copyright",
+      value: "Created with Rosette (https://rosette.azurewebsites.net)",
+      xpos: -120,
+      ypos: 115,
+      size: 3,
+      weight: 400,
+      angle: 0,
+      anchor: "left",
+      color: "#000000"
     }
   ];
   let spaces = [2, 1, 1, 1, 0.7, 0.3];
@@ -138,8 +151,8 @@
     size_y: 290,
     center_x: 125,
     center_y: 170,
-    papersize: "A4",
-    angleoffset: 90
+    papersize: "a4",
+    angleoffset: -1.5
   };
   let textoptions = {
     sections: {

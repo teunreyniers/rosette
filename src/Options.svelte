@@ -5,6 +5,7 @@
   import Collapsible from "./Collapsible.svelte";
   import LabelForm from "./LabelForm.svelte";
   import DragInput from "./DragInput.svelte";
+  import DragSelect from "./DragSelect.svelte";
   import LineStyleForm from "./LineStyleForm.svelte";
   import TextForm from "./TextForm.svelte";
 
@@ -15,6 +16,25 @@
   export let lines;
   export let textoptions;
   export let layout;
+
+  const papersizes = [
+    {
+      value: "a4",
+      name: "A4"
+    },
+    {
+      value: "a5",
+      name: "A5"
+    },
+    {
+      value: "a6",
+      name: "A6"
+    },
+    {
+      value: "letter",
+      name: "Letter"
+    }
+  ];
 
   let length = 350;
   let height = 35;
@@ -150,13 +170,13 @@
         <label>Size</label>
         <DragInput
           value={layout.size_x}
-          on:input={e => dispatch('layoutchange', {
+          on:change={e => dispatch('layoutchange', {
               ...layout,
               size_x: e.detail.value
             })} />
         <DragInput
           value={layout.size_y}
-          on:input={e => dispatch('layoutchange', {
+          on:change={e => dispatch('layoutchange', {
               ...layout,
               size_y: e.detail.value
             })} />
@@ -165,13 +185,13 @@
         <label>Center</label>
         <DragInput
           value={layout.center_x}
-          on:input={e => dispatch('layoutchange', {
+          on:change={e => dispatch('layoutchange', {
               ...layout,
               center_x: e.detail.value
             })} />
         <DragInput
           value={layout.center_y}
-          on:input={e => dispatch('layoutchange', {
+          on:change={e => dispatch('layoutchange', {
               ...layout,
               center_y: e.detail.value
             })} />
@@ -179,8 +199,11 @@
       <div class="tri">
         <label>Angle</label>
         <DragInput
+          step={0.02}
+          sensitivity={0.005}
+          min={-Infinity}
           value={layout.angleoffset}
-          on:input={e => dispatch('layoutchange', {
+          on:change={e => dispatch('layoutchange', {
               ...layout,
               angleoffset: e.detail.value
             })} />
@@ -188,17 +211,13 @@
       </div>
       <div class="bl">
         <label>Pdf paper size</label>
-        <select
+        <DragSelect
+          options={papersizes}
           value={layout.papersize}
-          on:input={e => dispatch('layoutchange', {
+          on:change={e => dispatch('layoutchange', {
               ...layout,
-              papersize: e.target.value
-            })}>
-          <option>A4</option>
-          <option>A5</option>
-          <option>A6</option>
-          <option>Letter</option>
-        </select>
+              papersize: e.detail.value
+            })} />
       </div>
     </div>
   </Collapsible>
@@ -241,7 +260,7 @@
         <input
           size="1"
           value={grade.name}
-          on:input={e => dispatch('gradechange', {
+          on:change={e => dispatch('gradechange', {
               action: 'change',
               index: grades.length - i - 1,
               value: {
@@ -261,7 +280,7 @@
     <DragInput
       value={devitions}
       sensitivity={0.02}
-      on:input={e => dispatch('spacechange', {
+      on:change={e => dispatch('spacechange', {
           action: 'devitions',
           value: e.detail.value
         })} />
@@ -274,7 +293,7 @@
               step={0.01}
               value={point.difference}
               size="1"
-              on:input={e => dispatch('spacechange', {
+              on:change={e => dispatch('spacechange', {
                   action: 'change',
                   index,
                   value: e.detail.value

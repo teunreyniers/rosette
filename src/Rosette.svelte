@@ -25,7 +25,7 @@
   const scale_factor = 100;
   const dispatch = createEventDispatcher();
 
-  $: angleoffset = -Math.PI / 2 + (layout.angleoffset / 180) * Math.PI;
+  $: angleoffset = -Math.PI / 2 - 2 * (layout.angleoffset / count) * Math.PI;
 
   $: parts = sections.reduce((a, v) => [...a, ...v.parts], []);
 
