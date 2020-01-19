@@ -55,6 +55,10 @@
 </script>
 
 <style>
+  input {
+    margin: 0px;
+  }
+
   .isDragging {
     cursor: ew-resize;
     user-select: none;

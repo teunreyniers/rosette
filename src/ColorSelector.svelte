@@ -3,6 +3,7 @@
   import { HsvPicker } from "svelte-color-picker";
 
   export let color;
+  export let key;
 
   const dispatch = createEventDispatcher();
   let colorPickerOpen = false;
@@ -67,20 +68,22 @@
 <div class="container">
   <div
     class="preview"
-    style="background-color: {color.value}"
+    style="background-color: {color}"
     on:click={openColorPicker} />
-  <input bind:value={color.value} on:input={() => dispatch('changed', color)} />
+  <input
+    bind:value={color}
+    on:input={() => dispatch('change', { value: color, key })} />
   {#if colorPickerOpen}
     <div
       class="z"
       bind:offsetWidth={colorPickerLeft}
       bind:offsetHeight={colorPickerTop}>
       <HsvPicker
-        on:colorChange={e => dispatch('changed', {
-            ...color,
+        on:colorChange={e => dispatch('change', {
+            key,
             value: rgbToHex(e.detail.r, e.detail.g, e.detail.b)
           })}
-        startColor={color.value} />
+        startColor={color} />
     </div>
   {/if}
 </div>

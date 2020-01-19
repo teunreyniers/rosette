@@ -45,7 +45,7 @@
     ev.preventDefault();
     let dragged = getDraggedParent(ev.target);
     let from = ev.dataTransfer.getData("source");
-    let to = dragged.index;
+    let to = dragged.index;  
     reorder({ from, to });
   };
   // DISPATCH REORDER

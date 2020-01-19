@@ -1,12 +1,14 @@
 <script>
   export let items;
+  export let xsize = 500;
+  export let ysize = 500;
 
   $: rows = Math.ceil(Math.sqrt(items.length));
   $: columns = Math.floor(Math.sqrt(items.length));
 
   let isMousedown = false;
   let scroller;
-  let size = 500;
+  let scale = 1;
 
   function handleMousedown(event) {
     isMousedown = true;
@@ -30,7 +32,9 @@
   function handleScroll(event) {
     if (event.ctrlKey) {
       event.preventDefault();
-      size = Math.max(50, size - event.deltaY * 5);
+      console.log(scale);
+
+      scale = Math.max(0.1, scale * (1 - event.deltaY * 0.05));
     }
   }
 </script>
@@ -70,7 +74,9 @@
       style="grid-template-columns: auto repeat({columns - 1}, 1fr);
       grid-template-rows: repeat({rows}, 1fr);">
       {#each items as item, index (item.key)}
-        <div class="item-container" style="height: {size}px; width: {size}px">
+        <div
+          class="item-container"
+          style="height: {ysize * scale}px; width: {xsize * scale}px">
           <slot {item} {index} />
         </div>
       {/each}

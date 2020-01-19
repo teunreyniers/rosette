@@ -33,10 +33,16 @@ input, button, select, textarea {
 	font-family: inherit;
 	font-size: inherit;
 	padding: 0.4em;
-	margin: 0 0 0.5em 0;
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 2px;
+}
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	text-overflow: '';
+	padding: 0.4em 0.2em;
 }
 
 input:disabled {
@@ -64,4 +70,40 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+.labelvalue {
+	display: flex;
+	flex-flow: wrap;
+	justify-content: left;
+}
+
+.labelvalue div {
+	display: grid;
+	grid-template-columns: 61px 65px;
+	margin-bottom: 5px;
+}
+
+.labelvalue div.double {
+	display: grid;
+	grid-template-columns: 61px 191px;
+}
+
+.labelvalue div.tri {
+	display: grid;
+	grid-template-columns: 76px 88px 88px;
+}
+
+.labelvalue div.tri :last-child {
+	margin-left: 5px;
+}
+
+.labelvalue div.bl {
+	display: grid;
+	grid-template-columns: 126px 126px;
+}
+
+.labelvalue label {
+	display: inline;
+	margin: 5px 2px 0px 5px;
 }

@@ -5,11 +5,16 @@
   import Collapsible from "./Collapsible.svelte";
   import LabelForm from "./LabelForm.svelte";
   import DragInput from "./DragInput.svelte";
+  import LineStyleForm from "./LineStyleForm.svelte";
+  import TextForm from "./TextForm.svelte";
 
-  export let colors;
+  export let grades;
   export let labels;
   export let spaces;
   export let devitions;
+  export let lines;
+  export let textoptions;
+  export let layout;
 
   let length = 350;
   let height = 35;
@@ -74,8 +79,14 @@
     background: #ccc;
     width: 4px;
     border-radius: 5px;
-    margin: 20px 3px;
+    margin: 20px 10px;
     position: relative;
+  }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-gap: 2px;
   }
 
   .point {
@@ -131,7 +142,66 @@
 </style>
 
 <div class="background">
+  <button on:click={() => dispatch('dataEditor')}>Edit records</button>
   <h3>Options</h3>
+  <Collapsible header="Layout">
+    <div class="labelvalue">
+      <div class="tri">
+        <label>Size</label>
+        <DragInput
+          value={layout.size_x}
+          on:input={e => dispatch('layoutchange', {
+              ...layout,
+              size_x: e.detail.value
+            })} />
+        <DragInput
+          value={layout.size_y}
+          on:input={e => dispatch('layoutchange', {
+              ...layout,
+              size_y: e.detail.value
+            })} />
+      </div>
+      <div class="tri">
+        <label>Center</label>
+        <DragInput
+          value={layout.center_x}
+          on:input={e => dispatch('layoutchange', {
+              ...layout,
+              center_x: e.detail.value
+            })} />
+        <DragInput
+          value={layout.center_y}
+          on:input={e => dispatch('layoutchange', {
+              ...layout,
+              center_y: e.detail.value
+            })} />
+      </div>
+      <div class="tri">
+        <label>Angle</label>
+        <DragInput
+          value={layout.angleoffset}
+          on:input={e => dispatch('layoutchange', {
+              ...layout,
+              angleoffset: e.detail.value
+            })} />
+        <span />
+      </div>
+      <div class="bl">
+        <label>Pdf paper size</label>
+        <select
+          value={layout.papersize}
+          on:input={e => dispatch('layoutchange', {
+              ...layout,
+              papersize: e.target.value
+            })}>
+          <option>A4</option>
+          <option>A5</option>
+          <option>A6</option>
+          <option>Letter</option>
+        </select>
+      </div>
+    </div>
+  </Collapsible>
   <Collapsible header="Labels">
     {#each labels as label, index (label.key)}
       <LabelForm {label} {index} on:labelchange />
@@ -141,42 +211,60 @@
       Add label
     </button>
   </Collapsible>
-  <Collapsible header="Colors">
+  <Collapsible header="Colors &amp; grades">
     <DraggableList
       key="key"
-      list={colors.reduce((a, v) => [v, ...a], [])}
-      let:item={color}
+      list={grades.reduce((a, v) => [v, ...a], [])}
+      let:item={grade}
       let:index={i}
-      on:sort={e => dispatch('colorChange', {
+      on:sort={e => dispatch('gradechange', {
           action: 'reorder',
-          from: colors.length - 1 - e.detail.from,
-          to: colors.length - 1 - e.detail.to
+          from: grades.length - 1 - e.detail.from,
+          to: grades.length - 1 - e.detail.to
         })}
-      on:delete={e => dispatch('colorChange', {
+      on:delete={e => dispatch('gradechange', {
           action: 'delete',
-          index: colors.length - e.detail - 1
+          index: grades.length - e.detail - 1
         })}>
-
-      <ColorSelector
-        {color}
-        on:changed={e => dispatch('colorChange', {
-            action: 'change',
-            index: colors.length - i - 1,
-            oldColor: color,
-            newColor: e.detail
-          })} />
-
+      <div class="grid2">
+        <ColorSelector
+          color={grade.color}
+          key={grade.key}
+          on:change={e => dispatch('gradechange', {
+              action: 'change',
+              index: grades.length - i - 1,
+              value: {
+                ...grade,
+                color: e.detail.value
+              }
+            })} />
+        <input
+          size="1"
+          value={grade.name}
+          on:input={e => dispatch('gradechange', {
+              action: 'change',
+              index: grades.length - i - 1,
+              value: {
+                ...grade,
+                name: e.target.value
+              }
+            })} />
+      </div>
     </DraggableList>
     <button
       on:click={e => dispatch('colorChange', { action: 'add', index: 0 })}>
       Add color
     </button>
   </Collapsible>
-  <Collapsible header="Widths">
-    <DragInput value={devitions} sensitivity={0.02} on:input={e => dispatch('spacechange', {
-                  action: 'devitions',
-                  value: e.detail.value
-                })} />
+  <Collapsible header="Widths" defaultState={false}>
+    <label>Number of grades</label>
+    <DragInput
+      value={devitions}
+      sensitivity={0.02}
+      on:input={e => dispatch('spacechange', {
+          action: 'devitions',
+          value: e.detail.value
+        })} />
     <div class="slider" style="height:{length}px;">
       {#each points as point, index}
         <div class="point" style="bottom:{point.offset}px">
@@ -197,6 +285,26 @@
       {/each}
     </div>
   </Collapsible>
-  <Collapsible header="Lines" />
-  <button on:click={() => dispatch('dataEditor')}>Edit records</button>
+  <Collapsible header="Lines" defaultState={false}>
+    {#each lines as line, index (line.key)}
+      <LineStyleForm
+        title={line.key}
+        color={line.color}
+        style={line.style}
+        width={line.width}
+        cap={line.cap}
+        on:linestylechange />
+    {/each}
+  </Collapsible>
+  <Collapsible header="Text options" defaultState={false}>
+    {#each textoptions as option (option.key)}
+      <TextForm textoptions={option} on:textoptionschange />
+    {/each}
+  </Collapsible>
+  <Collapsible header="Include" defaultState={false}>
+    <div class="labelvalue">
+      <label>Legend</label>
+      <input type="checkbox" />
+    </div>
+  </Collapsible>
 </div>

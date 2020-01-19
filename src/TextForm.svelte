@@ -2,24 +2,21 @@
   import { createEventDispatcher } from "svelte";
   import Collapsible from "./Collapsible.svelte";
   import DragInput from "./DragInput.svelte";
-  import ColorSelector from "./ColorSelector.svelte"
+  import ColorSelector from "./ColorSelector.svelte";
 
-  export let label;
-  export let index;
+  export let textoptions;
 
   const dispatch = createEventDispatcher();
 
   function handleInput(prop) {
     return event => {
       const payload = {
-        action: "change",
-        label,
-        index
+        ...textoptions
       };
-      payload.label[prop] = event.target
+      payload[prop] = event.target
         ? event.target.value
         : event.detail.value;
-      dispatch("labelchange", payload);
+      dispatch("textoptionschange", payload);
     };
   }
 </script>
@@ -58,22 +55,18 @@
 
   .body div {
     display: grid;
-    grid-template-columns: 60px 60px;
+    grid-template-columns: 61px 65px;
     margin-bottom: 5px;
   }
 
   .body div.double {
     display: grid;
-    grid-template-columns: 60px 180px;
+    grid-template-columns: 61px 191px;
   }
 
   .body label {
     display: inline;
     margin: 5px 2px 0px 5px;
-  }
-
-  .remove {
-    background: lightsalmon;
   }
 
   .collapser .isOpen {
@@ -86,59 +79,78 @@
     <span class:isOpen>></span>
   </button>
   <div slot="header" class="header">
-    {#if label.readonly}
-      <label>{label.name}</label>
-    {:else}
-      <input size="5" value={label.name} on:input={handleInput('name')} />
-      <input size="5" value={label.value} on:input={handleInput('value')} />
-    {/if}
+
+    <label>{textoptions.title}</label>
+
   </div>
   <div class="body">
     <div>
-      <label>Xpos</label>
-      <DragInput size="1" min={-Infinity} value={label.xpos} on:input={handleInput('xpos')} />
+      <label>X offset</label>
+      <DragInput
+        size="1"
+        min={-Infinity}
+        value={textoptions.xpos}
+        on:input={handleInput('xpos')} />
     </div>
     <div>
-      <label>Ypos</label>
-      <DragInput size="1" min={-Infinity} value={label.ypos} on:input={handleInput('ypos')} />
+      <label>Y offset</label>
+      <DragInput
+        size="1"
+        min={-Infinity}
+        value={textoptions.ypos}
+        on:input={handleInput('ypos')} />
     </div>
     <div>
       <label>Size</label>
-      <DragInput size="1" value={label.size} on:input={handleInput('size')} />
+      <DragInput
+        size="1"
+        value={textoptions.size}
+        on:input={handleInput('size')} />
     </div>
     <div>
       <label>Weight</label>
       <DragInput
         size="1"
-        value={label.weight}
+        value={textoptions.weight}
         on:input={handleInput('weight')} />
     </div>
     <div>
       <label>Angle</label>
-      <DragInput size="1" value={label.angle} on:input={handleInput('angle')} />
+      <DragInput
+        size="1"
+        value={textoptions.angle}
+        on:input={handleInput('angle')} />
     </div>
     <div>
       <label>Align</label>
-      <select value={label.anchor} on:change={handleInput('anchor')}>
-        <option value="start" >Left</option>
+      <select value={textoptions.anchor} on:change={handleInput('anchor')}>
+        <option value="start">Left</option>
         <option value="middle">Center</option>
         <option value="end">Right</option>
       </select>
     </div>
+    <div>
+      <label>Curve</label>
+     <select value={textoptions.curve} on:change={handleInput('curve')}>
+        <option value="normal">Normal</option>
+        <option value="none">None</option>
+      </select>
+    </div>
+     <div>
+      <label>Flip</label>
+     <select value={textoptions.flip} on:change={handleInput('flip')}>
+        <option value="none">None</option>
+        <option value="horizontal">Horizontal</option>
+        <option value="vertical">Vertical</option>
+        <option value="both">Both</option>
+      </select>
+    </div>
     <div class="double">
       <label>Color</label>
-      <ColorSelector key={label.title} color={label.color} on:change={handleInput('color')} />
+      <ColorSelector
+        key={textoptions.key}
+        color={textoptions.color}
+        on:change={handleInput('color')} />
     </div>
   </div>
-  {#if !label.readonly}
-    <button
-      class="remove"
-      on:click={() => dispatch('labelchange', {
-          action: 'delete',
-          label,
-          index
-        })}>
-      Remove
-    </button>
-  {/if}
 </Collapsible>

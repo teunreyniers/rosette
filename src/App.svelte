@@ -5,11 +5,11 @@
   import Nav from "./Nav.svelte";
   import DataEditor from "./DataEditor.svelte";
 
-  let colors = [
-    { key: "1", value: "#ff8ba7" },
-    { key: "2", value: "#ffc6c7" },
-    { key: "3", value: "#c3f0ca" },
-    { key: "4", value: "#abd1c6" }
+  let grades = [
+    { key: "1", color: "#ff8ba7", name: "Can Better" },
+    { key: "2", color: "#ffc6c7", name: "Fine" },
+    { key: "3", color: "#c3f0ca", name: "Good" },
+    { key: "4", color: "#abd1c6", name: "Super" }
   ];
   let students = [
     {
@@ -91,26 +91,103 @@
       name: "Student name",
       value: "<name>",
       xpos: 0,
-      ypos: 140,
-      size: 12,
-      weight: 400,
+      ypos: -145,
+      size: 18,
+      weight: 600,
       angle: 0,
-      anchor: "middle"
+      anchor: "middle",
+      color: "#000000"
     },
     {
       key: CreateUUID(),
       readonly: false,
       name: "Course name",
-      value: "Mathematics",
+      value: "<Course name>",
       xpos: 0,
-      ypos: 120,
+      ypos: -130,
       size: 12,
-      weight: 400,
+      weight: 200,
       angle: 0,
-      anchor: "middle"
+      anchor: "middle",
+      color: "#000000"
     }
   ];
   let spaces = [2, 1, 1, 1, 0.7, 0.3];
+  let lines = {
+    sections: {
+      width: 0.9,
+      style: "none",
+      color: "#666666",
+      cap: "round"
+    },
+    parts: {
+      width: 0.7,
+      style: "none",
+      color: "#999999",
+      cap: "round"
+    },
+    grades: {
+      width: 0.7,
+      style: "none",
+      color: "#999999",
+      cap: "round"
+    }
+  };
+  let layout = {
+    size_x: 250,
+    size_y: 290,
+    center_x: 125,
+    center_y: 170,
+    papersize: "A4",
+    angleoffset: 90
+  };
+  let textoptions = {
+    sections: {
+      title: "Sections",
+      readonly: false,
+      name: "Student name",
+      value: "<name>",
+      xpos: 0,
+      ypos: 5,
+      size: 14,
+      weight: 200,
+      angle: 0,
+      anchor: "middle",
+      color: "#000000",
+      curve: "normal",
+      flip: "none"
+    },
+    parts: {
+      title: "Parts",
+      readonly: false,
+      name: "Student name",
+      value: "<name>",
+      xpos: 0,
+      ypos: 0,
+      size: 9,
+      weight: 400,
+      angle: 0,
+      anchor: "middle",
+      color: "#000000",
+      curve: "normal",
+      flip: "none"
+    },
+    grades: {
+      title: "Grades",
+      readonly: false,
+      name: "Student name",
+      value: "<name>",
+      xpos: 0,
+      ypos: 30,
+      size: 6,
+      weight: 400,
+      angle: 0,
+      anchor: "middle",
+      color: "#000000",
+      curve: "normal",
+      flip: "none"
+    }
+  };
 
   let devitions = 4;
 
@@ -145,20 +222,20 @@
     return arr; // for testing
   }
 
-  function handleColorChange({ detail }) {
+  function handleGradechange({ detail }) {
     const { action } = detail;
     switch (action) {
       case "reorder":
-        colors = array_move(colors, detail.from, detail.to);
+        grades = array_move(grades, detail.from, detail.to);
         break;
       case "delete":
-        colors = colors.filter((_, i) => detail.index != i);
+        grades = grades.filter((_, i) => detail.index != i);
         break;
       case "add":
-        colors = [{ key: CreateUUID(), value: "#ffffff" }, ...colors];
+        grades = [{ key: CreateUUID(), value: "#ffffff" }, ...grades];
         break;
       case "change":
-        colors[detail.index] = detail.newColor;
+        grades[detail.index] = detail.value;
         break;
       default:
         break;
@@ -280,7 +357,7 @@
   function handleLabelChange({ detail }) {
     const { action } = detail;
     switch (action) {
-      case "add":     
+      case "add":
         labels = [
           ...labels,
           {
@@ -327,6 +404,16 @@
         break;
     }
   }
+
+  function handleLineStyleChanged({ detail }) {
+    const { title, ...style } = detail;
+    lines[title.toLowerCase()] = style;
+  }
+
+  function handleTextoptionsChange({ detail }) {
+    const { key, ...options } = detail;
+    textoptions[key] = options;
+  }
 </script>
 
 <style>
@@ -348,21 +435,39 @@
 <div class="app">
   <Nav />
   <Options
-    {colors}
+    {grades}
     {labels}
     {spaces}
     {devitions}
-    on:colorChange={handleColorChange}
+    {layout}
+    lines={Object.keys(lines).map(key => ({ ...lines[key], key }))}
+    textoptions={Object.keys(textoptions).map(key => ({
+      ...textoptions[key],
+      key
+    }))}
+    on:gradechange={handleGradechange}
     on:dataEditor={() => (isEditRecordsOpen = true)}
     on:labelchange={handleLabelChange}
-    on:spacechange={handleSpaceChange} />
-  <Grid items={rosettes} let:item={rosette} let:index>
+    on:spacechange={handleSpaceChange}
+    on:linestylechange={handleLineStyleChanged}
+    on:textoptionschange={handleTextoptionsChange}
+    on:layoutchange={e => (layout = e.detail)} />
+  <Grid
+    items={rosettes}
+    let:item={rosette}
+    let:index
+    xsize={layout.size_x}
+    ysize={layout.size_y}>
     <Rosette
-      colors={colors.map(x => x.value)}
+      colors={grades.map(x => x.color)}
+      grades={grades.map(x => x.name)}
       sections={rosette.sections}
       labels={rosette.labels}
       {spaces}
       {devitions}
+      {lines}
+      {layout}
+      {textoptions}
       key={rosette.key} />
   </Grid>
 </div>
