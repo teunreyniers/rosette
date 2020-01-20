@@ -32,8 +32,6 @@
   function handleScroll(event) {
     if (event.ctrlKey) {
       event.preventDefault();
-      console.log(scale);
-
       scale = Math.max(0.1, scale * (1 - event.deltaY * 0.05));
     }
   }

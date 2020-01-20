@@ -18,7 +18,6 @@
   }
 
   function handleMousedown(event) {
-    console.log(ignore);
     if (!ignore&& !event.ctrlKey) {
       event.preventDefault();
       isMousedown = true;
@@ -29,7 +28,6 @@
 
   function handleMousemove(event) {
     if (isMousedown) {
-      console.log("move");
       select.blur()
       isDragging = true;
       change += event.movementX * sensitivity;

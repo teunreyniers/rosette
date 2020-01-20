@@ -98,8 +98,6 @@
 
   function dispatchChangeEvent(value, decimal) {
     value = limit(min, max, round(value, decimal));
-    console.log(value);
-    
     dispatch("change", { value });
   }
 </script>
