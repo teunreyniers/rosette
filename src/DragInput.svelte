@@ -38,7 +38,7 @@
   }
 
   function handleChange(event) {
-    dispatchChangeEvent(handleChange, finest);
+    dispatchChangeEvent(parseFloat(event.target.value), finest);
   }
 
   function handleMousemove(event) {
@@ -90,8 +90,16 @@
     hasFocus = false;
   }
 
+  function handleKeydown(event) {
+    if(event.key === 'Enter'){
+      input.blur()
+    }
+  }
+
   function dispatchChangeEvent(value, decimal) {
     value = limit(min, max, round(value, decimal));
+    console.log(value);
+    
     dispatch("change", { value });
   }
 </script>
@@ -117,4 +125,5 @@
   on:change={handleChange}
   on:input
   on:mousedown={handleMousedown}
-  on:focusout={handleFocusout} />
+  on:focusout={handleFocusout} 
+  on:keydown={handleKeydown}/>
