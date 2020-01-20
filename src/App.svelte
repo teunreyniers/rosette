@@ -1,10 +1,17 @@
 <script>
+  import moment from "moment";
+  import FileSaver from "file-saver";
+  import converter from "./converter";
+
   import Grid from "./Grid.svelte";
   import Rosette from "./Rosette.svelte";
   import Options from "./Options.svelte";
   import Nav from "./Nav.svelte";
   import DataEditor from "./DataEditor.svelte";
+  import { onMount, tick } from "svelte";
 
+  let creator;
+  let creatorIndex = 0;
   let grades = [
     { key: "1", color: "#ff8ba7", name: "Can Better" },
     { key: "2", color: "#ffc6c7", name: "Fine" },
@@ -152,7 +159,10 @@
     center_x: 125,
     center_y: 170,
     papersize: "a4",
-    angleoffset: -1.5
+    angleoffset: -1.5,
+    png_height: 2048,
+    png_width: 2048,
+    pdf_height: 500
   };
   let textoptions = {
     sections: {
@@ -427,6 +437,74 @@
     const { key, ...options } = detail;
     textoptions[key] = options;
   }
+
+  async function createZip(event) {
+    const papers = {
+      a4: {
+        name: "A4",
+        size: { x: 595.28, y: 841.89 }
+      },
+      a5: {
+        name: "A5",
+        size: { x: 595.28, y: 841.89 }
+      },
+      a6: {
+        name: "A6",
+        size: { x: 595.28, y: 841.89 }
+      },
+      letter: {
+        name: "LETTER",
+        size: { x: 595.28, y: 841.89 }
+      }
+    };
+
+    const items = [];
+
+    creatorIndex = 0;
+    await tick();
+    for (let i = 0; i < students.length; i++) {
+      creatorIndex = i;
+      await tick();
+
+      items.push({
+        name: students[i].name,
+        svg: creator.innerHTML
+      });
+    }
+    creatorIndex = 0;
+
+    if (event.detail.type === "1pdf") {
+      const blob = await converter.pdf(items, {
+        size: papers[layout.papersize].name,
+        height: layout.pdf_height
+      });
+      FileSaver.saveAs(
+        blob,
+        `rosettes ${moment().format("YYYY-MM-DD h-mm")}.pdf`
+      );
+      return;
+    }
+
+    let blob;
+    if (event.detail.type === "svg") {
+      blob = await converter.svgzip(items, {});
+    } else if (event.detail.type === "pdf") {
+      blob = await converter.pdfzip(items, {
+        size: papers[layout.papersize].name,
+        height: layout.pdf_height
+      });
+    } else if (event.detail.type === "png") {
+      blob = await converter.pngzip(items, {
+        width: layout.png_width,
+        height: layout.png_height
+      });
+    }
+
+    FileSaver.saveAs(
+      blob,
+      `rosettes ${moment().format("YYYY-MM-DD h-mm")}.zip`
+    );
+  }
 </script>
 
 <style>
@@ -438,12 +516,34 @@
     overflow: hidden;
   }
 
+  .hidden {
+    visibility: collapse;
+    height: 0px;
+    overflow: hidden;
+  }
+
   @media only screen and (max-width: 600px) {
     .app {
       grid-template: "nav" auto "options" 300px "preview" 1fr / 1fr;
     }
   }
 </style>
+
+<div bind:this={creator} class="hidden">
+  <!-- {#if creatorIndex} -->
+  <Rosette
+    colors={grades.map(x => x.color)}
+    grades={grades.map(x => x.name)}
+    sections={rosettes[creatorIndex].sections}
+    labels={rosettes[creatorIndex].labels}
+    {spaces}
+    {devitions}
+    {lines}
+    {layout}
+    {textoptions}
+    key={rosettes[creatorIndex].key} />
+  <!-- {/if} -->
+</div>
 
 <div class="app">
   <Nav />
@@ -464,7 +564,8 @@
     on:spacechange={handleSpaceChange}
     on:linestylechange={handleLineStyleChanged}
     on:textoptionschange={handleTextoptionsChange}
-    on:layoutchange={e => (layout = e.detail)} />
+    on:layoutchange={e => (layout = e.detail)}
+    on:exportAll={createZip} />
   <Grid
     items={rosettes}
     let:item={rosette}

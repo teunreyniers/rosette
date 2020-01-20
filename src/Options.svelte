@@ -163,6 +163,10 @@
 
 <div class="background">
   <button on:click={() => dispatch('dataEditor')}>Edit records</button>
+  <button on:click={() => dispatch('exportAll', { type: 'svg' })}>Svg</button>
+  <button on:click={() => dispatch('exportAll', { type: 'pdf' })}>Pdf</button>
+  <button on:click={() => dispatch('exportAll', { type: 'png' })}>Png</button>
+  <button on:click={() => dispatch('exportAll', { type: '1pdf' })}>1Pdf</button>
   <h3>Options</h3>
   <Collapsible header="Layout">
     <div class="labelvalue">
@@ -209,6 +213,10 @@
             })} />
         <span />
       </div>
+    </div>
+  </Collapsible>
+  <Collapsible header="Export options" defaultValue={false}>
+    <div class="labelvalue">
       <div class="bl">
         <label>Pdf paper size</label>
         <DragSelect
@@ -217,6 +225,30 @@
           on:change={e => dispatch('layoutchange', {
               ...layout,
               papersize: e.detail.value
+            })} />
+      </div>
+      <div class="bl">
+        <label>Pdf height</label>
+        <DragInput
+          value={layout.pdf_height}
+          on:change={e => dispatch('layoutchange', {
+              ...layout,
+              pdf_height: e.detail.value
+            })} />
+      </div>
+      <div class="tri">
+        <label>Png size</label>
+        <DragInput
+          value={layout.png_width}
+          on:change={e => dispatch('layoutchange', {
+              ...layout,
+              png_width: e.detail.value
+            })} />
+        <DragInput
+          value={layout.png_height}
+          on:change={e => dispatch('layoutchange', {
+              ...layout,
+              png_height: e.detail.value
             })} />
       </div>
     </div>

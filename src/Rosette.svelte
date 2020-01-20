@@ -22,6 +22,7 @@
   export let textoptions;
   export let layout;
 
+  const fontfamily = "sans-serif";
   const scale_factor = 100;
   const dispatch = createEventDispatcher();
 
@@ -195,12 +196,13 @@
     <!-- part Text -->
     <text
       fill={textoptions.parts.color}
+      font-family={fontfamily}
       font-size={textoptions.parts.size}
       font-weight={textoptions.parts.weight}
       transform="rotate({textoptions.parts.angle}
       {getRotationPoint(raduises[devitions] + textOffset + textoptions.parts.ypos, i, i + 1, textoptions.parts.xpos + 50, angleoffset)})">
       <textPath
-        href="#part-name-{key}-{i}"
+        xlink:href="#part-name-{key}-{i}"
         startOffset="50%"
         text-anchor={textoptions.parts.anchor}>
         {part.name}
@@ -260,12 +262,13 @@
     <!-- Section Text -->
     <text
       fill={textoptions.sections.color}
+      font-family={fontfamily}
       font-size={textoptions.sections.size}
       font-weight={textoptions.sections.weight}
       transform="rotate({textoptions.sections.angle}
       {getRotationPoint(raduises[devitions + 1] + textOffset + textoptions.sections.ypos, section_angles[i], section_angles[i + 1], textoptions.sections.xpos + 50, angleoffset)})">
       <textPath
-        href="#section-name-{key}-{i}"
+        xlink:href="#section-name-{key}-{i}"        
         startOffset="50%"
         text-anchor={textoptions.sections.anchor}>
         {section.name}
@@ -279,6 +282,7 @@
       x={textoptions.grades.xpos}
       y={-raduises[i] - ((raduises[i + 1] - raduises[i]) * textoptions.grades.ypos) / 100}
       font-size={textoptions.grades.size}
+      font-family={fontfamily}
       font-weight={textoptions.grades.weight}
       transform="rotate({textoptions.grades.angle}
       {textoptions.grades.xpos}
@@ -294,6 +298,7 @@
     <text
       x={label.xpos}
       y={label.ypos}
+      font-family={fontfamily}
       font-size={label.size}
       font-weight={label.weight}
       transform="rotate({label.angle}
