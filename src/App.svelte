@@ -2,6 +2,7 @@
   import moment from "moment";
   import FileSaver from "file-saver";
   import converter from "./converter";
+  import { _ } from 'svelte-i18n'
 
   import Grid from "./Grid.svelte";
   import Rosette from "./Rosette.svelte";
@@ -95,8 +96,8 @@
     {
       key: "__name__",
       readonly: true,
-      name: "Student name",
-      value: "<name>",
+      name: $_('options.labels.student_name_label'),
+      value: "Not used",
       xpos: 0,
       ypos: -145,
       size: 18,
@@ -108,8 +109,8 @@
     {
       key: CreateUUID(),
       readonly: false,
-      name: "Course name",
-      value: "<Course name>",
+      name: $_('options.labels.course_name_label'),
+      value: $_('options.labels.course_name_label'),
       xpos: 0,
       ypos: -130,
       size: 12,
@@ -121,8 +122,8 @@
     {
       key: CreateUUID(),
       readonly: false,
-      name: "Copyright",
-      value: "Created with Rosette (https://rosette.azurewebsites.net)",
+      name: $_('options.labels.copyright_label'),
+      value: $_('options.labels.copyright_value'),
       xpos: -120,
       ypos: 115,
       size: 3,
@@ -166,7 +167,7 @@
   };
   let textoptions = {
     sections: {
-      title: "Sections",
+      title: $_('properties.sections'),
       readonly: false,
       name: "Student name",
       value: "<name>",
@@ -181,7 +182,7 @@
       flip: "none"
     },
     parts: {
-      title: "Parts",
+      title: $_('properties.parts'),
       readonly: false,
       name: "Student name",
       value: "<name>",
@@ -196,7 +197,7 @@
       flip: "none"
     },
     grades: {
-      title: "Grades",
+      title: $_('properties.grades'),
       readonly: false,
       name: "Student name",
       value: "<name>",
@@ -528,6 +529,10 @@
     }
   }
 </style>
+
+<svelte:head>
+  <title>{$_('page_title')}</title>
+</svelte:head>
 
 <div bind:this={creator} class="hidden">
   <!-- {#if creatorIndex} -->

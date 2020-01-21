@@ -6,6 +6,7 @@
   export let background = "sandybrown";
   export let sidepanel = "salmon";
   export let close = "indianred";
+  export let header;
 
   const dispatch = createEventDispatcher();
 
@@ -21,11 +22,11 @@
     height: 100%;
     top: 0px;
     background-image: url("../pictures/star.svg");
-   background-position: -300px center;
-   background-blend-mode: overlay;
-   background-repeat: space;
-   background-size: cover;
-   z-index: 100;
+    background-position: -300px center;
+    background-blend-mode: overlay;
+    background-repeat: space;
+    background-size: cover;
+    z-index: 100;
   }
 
   .holder {
@@ -45,7 +46,6 @@
     display: grid;
     grid-template-columns: 30% 1fr;
     background: white;
-    
   }
 
   .content {
@@ -99,6 +99,7 @@
       <span class="close" style="background: {close}" on:click={handleClick} />
       <div class="side-image" style="background: {sidepanel}" />
       <div class="content">
+        <h1>{header}</h1>
         <slot />
       </div>
     </div>

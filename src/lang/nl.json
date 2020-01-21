@@ -1,0 +1,92 @@
+{
+  "about": "over",
+  "data_editor": {
+    "done": "Klaar",
+    "new_student": "nieuwe student",
+    "title": "Velden bewerken"
+  },
+  "language": "taal",
+  "options": {
+    "color_and_grades": {
+      "add_color": "Graad toevoegen",
+      "title": "Kleur & graad"
+    },
+    "download_as": {
+      "1pdf": "1 Pdf",
+      "pdf": "Pdf",
+      "png": "Png",
+      "svg": "Svg"
+    },
+    "edit_records": "Bewerk velden",
+    "export_options": {
+      "pdf_height": "Pdf height",
+      "pdf_paper_size": "Pdf paper size",
+      "png_size": "Png size",
+      "title": "Exporteer instellingen"
+    },
+    "labels": {
+      "add_label": "Label toevoegen",
+      "copyright_label": "Copyright",
+      "copyright_value": "Gemaakt met Rosette (https://rosette.azurewebsites.net)",
+      "course_name_label": "Vaknaam",
+      "course_name_value": "<vaknaam>",
+      "student_name_label": "Naam",
+      "title": "Labels"
+    },
+    "layout": {
+      "angle": "Hoek",
+      "center": "Centrum",
+      "size": "Grootte",
+      "title": "lay-out"
+    },
+    "lines": {
+      "title": "Opmaak lijnen"
+    },
+    "text_options": {
+      "title": "Opmaak tekst"
+    },
+    "title": "Opties",
+    "widths": {
+      "number_of_grades": "Aantal graden",
+      "title": "Afstanden"
+    }
+  },
+  "page_title": "Roset | Maak je roset",
+  "privacy": "privacy",
+  "properties": {
+    "align": "Uitlijning",
+    "align_center": "Midden",
+    "align_left": "Links",
+    "align_right": "Rechts",
+    "angle": "Hoek",
+    "color": "Kleur",
+    "curve": "Curve",
+    "curve_none": "Geen",
+    "curve_normal": "Standaard",
+    "flip": "Spiegeling",
+    "flip_both": "Beide",
+    "flip_horizontal": "Horizontaal",
+    "flip_none": "Geen",
+    "flip_vertical": "Verticaal",
+    "grades": "Graden",
+    "line_cap": "Einde",
+    "line_cap_butt": "Stomp",
+    "line_cap_round": "Rond",
+    "line_cap_square": "Vierkant",
+    "line_patern": "Patroon",
+    "line_patern_dashdot": "Streepje punt",
+    "line_patern_dashed": "Streepjes",
+    "line_patern_dotted": "Gestippeld",
+    "line_patern_solid": "Vol",
+    "line_thickness": "Dikte",
+    "parts": "Delen",
+    "remove": "Verwijder",
+    "sections": "Sectie",
+    "size": "Grootte",
+    "weight": "Gewicht",
+    "xoffset": "X offset",
+    "xpos": "Xpos",
+    "yoffset": "Y offset",
+    "ypos": "Ypos"
+  }
+}

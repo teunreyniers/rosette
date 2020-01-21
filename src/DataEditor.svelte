@@ -2,6 +2,7 @@
   import DraggablePanes from "./DraggablePanes.svelte";
   import { createEventDispatcher } from "svelte";
   import { slide } from "svelte/transition";
+  import { _ } from "svelte-i18n"
 
   export let students;
   export let sections;
@@ -139,8 +140,8 @@
 {#if sections && students}
   <div class="container" transition:slide>
     <div class="header">
-      <h2>Data editor</h2>
-      <button on:click={() => dispatch('close')}>Done</button>
+      <h2>{$_("data_editor.title")}</h2>
+      <button on:click={() => dispatch('close')}>{$_("data_editor.done")}</button>
     </div>
     <div class="data">
       <div class="students">
@@ -150,7 +151,7 @@
           </div>
         {/each}
         <div class="cell">
-          <input placeholder="new student" on:change={handleNewStudent} />
+          <input placeholder={$_("data_editor.new_student")} on:change={handleNewStudent} />
         </div>
       </div>
       <DraggablePanes

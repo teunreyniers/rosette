@@ -1,7 +1,6 @@
 <script>
-  import About from "./About.svelte";
-  import Privacy from "./Privacy.svelte";
   import InfoPopup from "./InfoPopup.svelte";
+  import { _, locale, locales } from "svelte-i18n";
 
   let showAbout = false;
   let showPrivacy = false;
@@ -9,7 +8,7 @@
 
 <style>
   nav {
-    background:  seagreen;
+    background: seagreen;
     display: grid;
     grid-template-columns: 1fr auto auto;
     vertical-align: middle;
@@ -41,15 +40,34 @@
     text-transform: uppercase;
     color: white;
   }
+
+  select {
+    background: transparent;
+    color: white;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+  }
+
+  li:hover select {
+    text-decoration: underline;
+  }
 </style>
 
 <nav>
   <div href="/" class="logo">rosette</div>
   <ul>
-    <li on:click={() => (showAbout = true)}>about</li>
-    <li on:click={() => (showPrivacy = true)}>privacy</li>
+    <li on:click={() => (showAbout = true)}>{$_('about')}</li>
+    <li on:click={() => (showPrivacy = true)}>{$_('privacy')}</li>
+    <li>
+      <select bind:value={$locale}>
+        {#each $locales as locale}
+          <option value={locale}>{locale}</option>
+        {/each}
+      </select>
+    </li>
   </ul>
-
 </nav>
 
 <InfoPopup
@@ -57,8 +75,9 @@
   on:close={() => (showAbout = false)}
   background="sandybrown"
   sidepanel="salmon"
-  close="indianred">
-  <About />
+  close="indianred" 
+  header={$_('about')}>
+  {@html $_('about_msg')}
 </InfoPopup>
 
 <InfoPopup
@@ -66,6 +85,7 @@
   on:close={() => (showPrivacy = false)}
   background="rgb(86, 117, 232)"
   sidepanel="rgb(19, 19, 115)"
-  close="rgb(57, 202, 202)">
-  <Privacy />
+  close="rgb(57, 202, 202)"
+  header={$_('privacy')}>
+  {@html $_('privacy_msg')}
 </InfoPopup>

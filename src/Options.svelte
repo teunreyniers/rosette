@@ -8,6 +8,7 @@
   import DragSelect from "./DragSelect.svelte";
   import LineStyleForm from "./LineStyleForm.svelte";
   import TextForm from "./TextForm.svelte";
+  import { _ } from 'svelte-i18n';
 
   export let grades;
   export let labels;
@@ -162,16 +163,16 @@
 </style>
 
 <div class="background">
-  <button on:click={() => dispatch('dataEditor')}>Edit records</button>
-  <button on:click={() => dispatch('exportAll', { type: 'svg' })}>Svg</button>
-  <button on:click={() => dispatch('exportAll', { type: 'pdf' })}>Pdf</button>
-  <button on:click={() => dispatch('exportAll', { type: 'png' })}>Png</button>
-  <button on:click={() => dispatch('exportAll', { type: '1pdf' })}>1Pdf</button>
-  <h3>Options</h3>
-  <Collapsible header="Layout">
+  <button on:click={() => dispatch('dataEditor')}>{$_('options.edit_records')}</button>
+  <button on:click={() => dispatch('exportAll', { type: 'svg' })}>{$_('options.download_as.svg')}</button>
+  <button on:click={() => dispatch('exportAll', { type: 'pdf' })}>{$_('options.download_as.pdf')}</button>
+  <button on:click={() => dispatch('exportAll', { type: 'png' })}>{$_('options.download_as.png')}</button>
+  <button on:click={() => dispatch('exportAll', { type: '1pdf' })}>{$_('options.download_as.1pdf')}</button>
+  <h3>{$_('options.title')}</h3>
+  <Collapsible header={$_('options.layout.title')}>
     <div class="labelvalue">
       <div class="tri">
-        <label>Size</label>
+        <label>{$_('options.layout.size')}</label>
         <DragInput
           value={layout.size_x}
           on:change={e => dispatch('layoutchange', {
@@ -186,7 +187,7 @@
             })} />
       </div>
       <div class="tri">
-        <label>Center</label>
+        <label>{$_('options.layout.center')}</label>
         <DragInput
           value={layout.center_x}
           on:change={e => dispatch('layoutchange', {
@@ -201,7 +202,7 @@
             })} />
       </div>
       <div class="tri">
-        <label>Angle</label>
+        <label>{$_('options.layout.angle')}</label>
         <DragInput
           step={0.02}
           sensitivity={0.005}
@@ -215,10 +216,10 @@
       </div>
     </div>
   </Collapsible>
-  <Collapsible header="Export options" defaultValue={false}>
+  <Collapsible header={$_('options.export_options.title')} defaultState={false}>
     <div class="labelvalue">
       <div class="bl">
-        <label>Pdf paper size</label>
+        <label>{$_('options.export_options.pdf_paper_size')}</label>
         <DragSelect
           options={papersizes}
           value={layout.papersize}
@@ -228,7 +229,7 @@
             })} />
       </div>
       <div class="bl">
-        <label>Pdf height</label>
+        <label>{$_('options.export_options.pdf_height')}</label>
         <DragInput
           value={layout.pdf_height}
           on:change={e => dispatch('layoutchange', {
@@ -237,7 +238,7 @@
             })} />
       </div>
       <div class="tri">
-        <label>Png size</label>
+        <label>{$_('options.export_options.png_size')}</label>
         <DragInput
           value={layout.png_width}
           on:change={e => dispatch('layoutchange', {
@@ -253,16 +254,16 @@
       </div>
     </div>
   </Collapsible>
-  <Collapsible header="Labels">
+  <Collapsible header={$_('options.labels.title')}>
     {#each labels as label, index (label.key)}
       <LabelForm {label} {index} on:labelchange />
     {/each}
     <button
       on:click={() => dispatch('labelchange', { action: 'add', index: 0 })}>
-      Add label
+      {$_('options.labels.add_label')}
     </button>
   </Collapsible>
-  <Collapsible header="Colors &amp; grades">
+  <Collapsible header={$_('options.color_and_grades.title')}>
     <DraggableList
       key="key"
       list={grades.reduce((a, v) => [v, ...a], [])}
@@ -304,11 +305,11 @@
     </DraggableList>
     <button
       on:click={e => dispatch('colorChange', { action: 'add', index: 0 })}>
-      Add color
+      {$_('options.color_and_grades.add_color')}
     </button>
   </Collapsible>
-  <Collapsible header="Widths" defaultState={false}>
-    <label>Number of grades</label>
+  <Collapsible header={$_('options.widths.title')} defaultState={false}>
+    <label>{$_('options.widths.number_of_grades')}</label>
     <DragInput
       value={devitions}
       sensitivity={0.02}
@@ -336,10 +337,10 @@
       {/each}
     </div>
   </Collapsible>
-  <Collapsible header="Lines" defaultState={false}>
+  <Collapsible header={$_('options.lines.title')} defaultState={false}>
     {#each lines as line, index (line.key)}
       <LineStyleForm
-        title={line.key}
+        title={$_(`properties.${line.key}`)}
         color={line.color}
         style={line.style}
         width={line.width}
@@ -347,7 +348,7 @@
         on:linestylechange />
     {/each}
   </Collapsible>
-  <Collapsible header="Text options" defaultState={false}>
+  <Collapsible header={$_('options.text_options.title')} defaultState={false}>
     {#each textoptions as option (option.key)}
       <TextForm textoptions={option} on:textoptionschange />
     {/each}

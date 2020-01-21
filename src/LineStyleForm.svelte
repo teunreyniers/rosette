@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import ColorSelector from "./ColorSelector.svelte";
   import DragInput from "./DragInput.svelte";
+  import { _ } from "svelte-i18n"
 
   export let title;
   export let width;
@@ -54,30 +55,30 @@
 
 <label class="title">{title}</label>
 <div class="props4">
-  <label>Width</label>
+  <label>{$_('properties.line_thickness')}</label>
   <DragInput
     size={1}
     step={0.05}
     value={width}
     on:input={createChangeHandler('width')} />
-  <label>Style</label>
+  <label>{$_('properties.line_patern')}</label>
   <select value={style} on:change={createChangeHandler('style')}>
-    <option value="none">Solid</option>
-    <option value="1 1">Dotted</option>
-    <option value="3 3">Dashed</option>
-    <option value="1 2 3 2">Dashdot</option>
+    <option value="none">{$_('properties.line_patern_solid')}</option>
+    <option value="1 1">{$_('properties.line_patern_dotted')}</option>
+    <option value="3 3">{$_('properties.line_patern_dashed')}</option>
+    <option value="1 2 3 2">{$_('properties.line_patern_dashdot')}</option>
   </select>
 </div>
 <div class="props3">
-  <label>Cap</label>
+  <label>{$_('properties.line_cap')}</label>
   <select value={cap} on:change={createChangeHandler('cap')}>
-    <option value="butt">Butt</option>
-    <option value="square">Square</option>
-    <option value="round">Round</option>
+    <option value="butt">{$_('properties.line_cap_butt')}</option>
+    <option value="square">{$_('properties.line_cap_square')}</option>
+    <option value="round">{$_('properties.line_cap_round')}</option>
   </select>
 </div>
 
 <div class="props2">
-  <label>Color</label>
+  <label>{$_('properties.color')}</label>
   <ColorSelector key={title} {color} on:change={createChangeHandler('color')} />
 </div>

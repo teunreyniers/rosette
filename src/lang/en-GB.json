@@ -1,0 +1,92 @@
+{
+  "about": "about",
+  "data_editor": {
+    "done": "Done",
+    "new_student": "new student",
+    "title": "Records editor"
+  },
+  "language": "language",
+  "options": {
+    "color_and_grades": {
+      "add_color": "Add colour",
+      "title": "Colour & grades"
+    },
+    "download_as": {
+      "1pdf": "1 Pdf",
+      "pdf": "Pdf",
+      "png": "Png",
+      "svg": "Svg"
+    },
+    "edit_records": "Edit records",
+    "export_options": {
+      "pdf_height": "Pdf height",
+      "pdf_paper_size": "Pdf paper size",
+      "png_size": "Png size",
+      "title": "Export options"
+    },
+    "labels": {
+      "add_label": "Add label",
+      "copyright_label": "Copyright",
+      "copyright_value": "Created with Rosette (https://rosette.azurewebsites.net)",
+      "course_name_label": "Course name",
+      "course_name_value": "<Course name>",
+      "student_name_label": "Student name",
+      "title": "Labels"
+    },
+    "layout": {
+      "angle": "Angle",
+      "center": "Center",
+      "size": "Size",
+      "title": "Layout"
+    },
+    "lines": {
+      "title": "Lines"
+    },
+    "text_options": {
+      "title": "Text options"
+    },
+    "title": "Options",
+    "widths": {
+      "number_of_grades": "Number of grades",
+      "title": "Widths"
+    }
+  },
+  "page_title": "Roset | Create your rosetts",
+  "privacy": "privacy",
+  "properties": {
+    "align": "Align",
+    "align_center": "Center",
+    "align_left": "left",
+    "align_right": "Right",
+    "angle": "Angle",
+    "color": "Colour",
+    "curve": "Curve",
+    "curve_none": "None",
+    "curve_normal": "Normal",
+    "flip": "Flip",
+    "flip_both": "Both",
+    "flip_horizontal": "Horizontal",
+    "flip_none": "None",
+    "flip_vertical": "Vertical",
+    "grades": "Grades",
+    "line_cap": "Cap",
+    "line_cap_butt": "Butt",
+    "line_cap_round": "Round",
+    "line_cap_square": "Square",
+    "line_patern": "Style",
+    "line_patern_dashdot": "Dashdot",
+    "line_patern_dashed": "Dashed",
+    "line_patern_dotted": "Dotted",
+    "line_patern_solid": "Solid",
+    "line_thickness": "Width",
+    "parts": "Parts",
+    "remove": "Remove",
+    "sections": "Sections",
+    "size": "Size",
+    "weight": "Weight",
+    "xoffset": "X offset",
+    "xpos": "Xpos",
+    "yoffset": "Y offset",
+    "ypos": "Ypos"
+  }
+}
