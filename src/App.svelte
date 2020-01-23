@@ -2,7 +2,7 @@
   import moment from "moment";
   import FileSaver from "file-saver";
   import converter from "./converter";
-  import { _ } from 'svelte-i18n'
+  import { _ } from "svelte-i18n";
 
   import Grid from "./Grid.svelte";
   import Rosette from "./Rosette.svelte";
@@ -45,17 +45,23 @@
         {
           key: "dd1",
           name: "Fysics",
-          scores: ["", 2, 3, 2]
+          scores: ["", 2, 3, 2],
+          tbs: 0,
+          threshold: 0
         },
         {
           key: "dd2",
           name: "Biology",
-          scores: [1, 2, 2, 3]
+          scores: [1, 2, 2, 3],
+          tbs: 0,
+          threshold: 0
         },
         {
           key: "dd3",
           name: "Chemistry",
-          scores: [4, 2, 3, 1]
+          scores: [4, 2, 3, 1],
+          tbs: 0,
+          threshold: 0
         }
       ]
     },
@@ -66,7 +72,9 @@
         {
           key: "fasdfasfsad dfasdf",
           name: "Chemistry",
-          scores: [4, 2, 3, 1]
+          scores: [4, 2, 3, 1],
+          tbs: 0,
+          threshold: 0
         }
       ]
     },
@@ -77,17 +85,23 @@
         {
           key: "dd54",
           name: "French",
-          scores: [1, 2, 3, 4]
+          scores: [1, 2, 3, 4],
+          tbs: 0,
+          threshold: 0
         },
         {
           key: "dddd",
           name: "English",
-          scores: [1, 2, 3, 1]
+          scores: [1, 2, 3, 1],
+          tbs: 0,
+          threshold: 0
         },
         {
           key: "dddddfd",
           name: "German",
-          scores: [1, 2, 3, 5]
+          scores: [1, 2, 3, 5],
+          tbs: 0,
+          threshold: 0
         }
       ]
     }
@@ -96,7 +110,7 @@
     {
       key: "__name__",
       readonly: true,
-      name: $_('options.labels.student_name_label'),
+      name: $_("options.labels.student_name_label"),
       value: "Not used",
       xpos: 0,
       ypos: -145,
@@ -109,8 +123,8 @@
     {
       key: CreateUUID(),
       readonly: false,
-      name: $_('options.labels.course_name_label'),
-      value: $_('options.labels.course_name_label'),
+      name: $_("options.labels.course_name_label"),
+      value: $_("options.labels.course_name_label"),
       xpos: 0,
       ypos: -130,
       size: 12,
@@ -122,8 +136,8 @@
     {
       key: CreateUUID(),
       readonly: false,
-      name: $_('options.labels.copyright_label'),
-      value: $_('options.labels.copyright_value'),
+      name: $_("options.labels.copyright_label"),
+      value: $_("options.labels.copyright_value"),
       xpos: -120,
       ypos: 115,
       size: 3,
@@ -167,7 +181,7 @@
   };
   let textoptions = {
     sections: {
-      title: $_('properties.sections'),
+      title: $_("properties.sections"),
       readonly: false,
       name: "Student name",
       value: "<name>",
@@ -182,7 +196,7 @@
       flip: "none"
     },
     parts: {
-      title: $_('properties.parts'),
+      title: $_("properties.parts"),
       readonly: false,
       name: "Student name",
       value: "<name>",
@@ -197,7 +211,7 @@
       flip: "none"
     },
     grades: {
-      title: $_('properties.grades'),
+      title: $_("properties.grades"),
       readonly: false,
       name: "Student name",
       value: "<name>",
@@ -213,10 +227,16 @@
     }
   };
 
+  let dataoptions = {
+    mode: "simple",
+    thresholds: [0.5, 0.7, 0.9],
+    importoptions: {}
+  };
+
   let devitions = 4;
 
   $: rosettes = students.map((student, index) => ({
-    sections: getSectionByIndex(sections, index),
+    sections: getSectionByIndex(sections, index, dataoptions),
     labels: labels.map(label => {
       if (label.key === "__name__") return { ...label, value: student.name };
       else return label;
@@ -224,7 +244,7 @@
     key: student.key
   }));
 
-  let isEditRecordsOpen = false;
+  let isEditRecordsOpen = true;
 
   function CreateUUID() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
@@ -266,116 +286,59 @@
     }
   }
 
-  function handleSectionChange({ detail }) {
-    const { action } = detail;
-    switch (action) {
-      case "reorder":
-        sections = array_move(sections, detail.from, detail.to);
-        break;
-      case "delete":
-        sections = sections.filter((_, i) => detail.sectionindex != i);
-        break;
-      case "add":
-        sections = [
-          { key: CreateUUID(), name: "new section", parts: [] },
-          ...sections
-        ];
-        break;
-      case "change":
-        sections[detail.index].name = detail.newName;
-        break;
-      default:
-        break;
-    }
-  }
-
-  function handlePartChange({ detail }) {
-    const { action } = detail;
-    switch (action) {
-      case "reorder":
-        const { from, to, fromscope, toscope } = detail;
-        const item = sections[fromscope].parts[from];
-        sections[fromscope].parts = sections[fromscope].parts.filter(
-          (_, i) => from != i
-        );
-        const arr = sections[toscope].parts;
-        sections[toscope].parts = [
-          ...arr.slice(0, to),
-          item,
-          ...arr.slice(to, arr.length)
-        ];
-        break;
-      case "delete":
-        sections[detail.sectionindex].parts = sections[
-          detail.sectionindex
-        ].parts.filter((_, i) => detail.partindex != i);
-        break;
-      case "add":
-        sections[detail.sectionindex].parts = [
-          {
-            key: CreateUUID(),
-            name: "<name>",
-            scores: Array(students.length).fill("")
-          },
-          ...sections[detail.sectionindex].parts
-        ];
-        break;
-      case "change":
-        sections[detail.sectionindex].parts[detail.partindex] = {
-          ...sections[detail.sectionindex].parts[detail.partindex],
-          name: detail.newName
-        };
-        sections = sections;
-        break;
-      case "cell":
-        sections[detail.sectionindex].parts[detail.partindex].scores[
-          detail.cellindex
-        ] = detail.value;
-        sections = sections;
-        break;
-      default:
-        break;
-    }
-  }
-
-  function handleStudentChange({ detail }) {
-    const { action } = detail;
-    switch (action) {
-      case "add":
-        sections = sections.map(section => ({
-          ...section,
-          parts: section.parts.map(part => ({
-            ...part,
-            scores: [...part.scores, 0]
-          }))
-        }));
-        students = [
-          ...students,
-          {
-            key: CreateUUID(),
-            name: detail.name
-          }
-        ];
-        break;
-      case "change":
-        sections[detail.index].name = detail.newName;
-        break;
-      default:
-        break;
-    }
-  }
-
-  function getSectionByIndex(sections, index) {
+  function getSectionByIndex(sections, index, dataoptions) {
     const r = sections.map(e => ({
       ...e,
       parts: e.parts
         .map(p => ({
           ...p,
-          devitions: p.scores[index]
+          devitions: getDeviations(p, index, dataoptions)
         }))
-        .filter(p => p.devitions !== "")
+        .filter(p => p.devitions !== undefined)
     }));
+
     return r;
+  }
+
+  function getDeviations(part, index, dataoptions) {
+    const value = part.scores[index];
+    if (value === "") return undefined;
+    if (dataoptions.mode === "normal") {
+      return getIndexNormal(
+        dataoptions.thresholds.map(e => parseFloat(e)),
+        parseFloat(value) / parseFloat(part.tbs)
+      );
+    } else if (dataoptions.mode === "advanced") {
+      return getIndexAdvanced(
+        dataoptions.thresholds.map(e => parseFloat(e)),
+        parseFloat(value) / parseFloat(part.tbs),
+        parseFloat(dataoptions.threshold)
+      );
+    } else {
+      return value;
+    }
+  }
+
+  function getIndexNormal(thresholds, value) {
+    let i = thresholds.length - 1;
+    while (value < thresholds[i] && i >= 0) {
+      i -= 1;
+    }
+    return i + 2;
+  }
+
+  function getIndexAdvanced(thresholds, value, threshold) {
+    let i = thresholds.length - 1;
+    while (
+      value <
+        threshold +
+          ((thresholds[i] - thresholds[0]) / (1 - thresholds[0])) *
+            (1 - threshold) &&
+      i >= 0
+    ) {
+      i -= 1;
+    }
+    return i + 2;
   }
 
   function handleLabelChange({ detail }) {
@@ -430,8 +393,8 @@
   }
 
   function handleLineStyleChanged({ detail }) {
-    const { title, ...style } = detail;
-    lines[title.toLowerCase()] = style;
+    const { key, ...style } = detail;
+    lines[key] = style;
   }
 
   function handleTextoptionsChange({ detail }) {
@@ -505,6 +468,102 @@
       blob,
       `rosettes ${moment().format("YYYY-MM-DD h-mm")}.zip`
     );
+  }
+
+  function handleDatachange({ detail }) {
+    const { target, action } = detail;
+    if (target === "dataoptions") {
+      if (action === "modechange") {
+        dataoptions.mode = detail.value;
+      } else if (action === "change_threshold") {
+        dataoptions.thresholds[detail.index] = detail.value;
+        dataoptions.thresholds = dataoptions.thresholds.filter(e => e !== "");
+      } else if (action === "add_threshold") {
+        dataoptions.thresholds = [...dataoptions.thresholds, detail.value];
+      }
+    } else if (target === "students") {
+      if (action === "change") {
+        students[detail.index].name = detail.value;
+      } else if (action == "add") {
+        sections = sections.map(section => ({
+          ...section,
+          parts: section.parts.map(part => ({
+            ...part,
+            scores: [...part.scores, 0]
+          }))
+        }));
+        students = [
+          ...students,
+          {
+            key: CreateUUID(),
+            name: detail.value
+          }
+        ];
+      }
+    } else if (target === "sections") {
+      if (action === "reorder") {
+        sections = array_move(sections, detail.from, detail.to);
+      } else if (action === "delete") {
+        sections = sections.filter((_, i) => detail.index != i);
+      } else if (action === "add") {
+        sections = [
+          ...sections,
+          { key: CreateUUID(), name: "new section", parts: [] }
+        ];
+      } else if (action === "change") {
+        sections[detail.index].name = detail.value;
+      }
+    } else if (target === "parts") {
+      if (action === "reorder") {
+        const { from, to, fromscope, toscope } = detail;
+        const item = sections[fromscope].parts[from];
+        sections[fromscope].parts = sections[fromscope].parts.filter(
+          (_, i) => from != i
+        );
+        const arr = sections[toscope].parts;
+        sections[toscope].parts = [
+          ...arr.slice(0, to),
+          item,
+          ...arr.slice(to, arr.length)
+        ];
+      } else if (action === "delete") {
+        sections[detail.sectionindex].parts = sections[
+          detail.sectionindex
+        ].parts.filter((_, i) => detail.index != i);
+      } else if (action === "add") {
+        sections[detail.sectionindex].parts = [
+          ...sections[detail.sectionindex].parts,
+          {
+            key: CreateUUID(),
+            name: "<name>",
+            tbs: "",
+            threshold: "",
+            scores: Array(students.length).fill("")
+          }
+        ];
+      } else if (action === "name_change") {
+        sections[detail.sectionindex].parts[detail.index] = {
+          ...sections[detail.sectionindex].parts[detail.index],
+          name: detail.value
+        };
+        sections = sections;
+      } else if (action === "cell_change") {
+        sections[detail.sectionindex].parts[detail.index].scores[
+          detail.cellindex
+        ] = detail.value;
+        sections = sections;
+      } else if (action === "tbs_change") {
+        sections[detail.sectionindex].parts[detail.index] = {
+          ...sections[detail.sectionindex].parts[detail.index],
+          tbs: detail.value
+        };
+      } else if (action === "threshold_change") {
+        sections[detail.sectionindex].parts[detail.index] = {
+          ...sections[detail.sectionindex].parts[detail.index],
+          threshold: detail.value
+        };
+      }
+    }
   }
 </script>
 
@@ -595,8 +654,7 @@
   <DataEditor
     {sections}
     {students}
+    {dataoptions}
     on:close={() => (isEditRecordsOpen = false)}
-    on:sectionchange={handleSectionChange}
-    on:partchange={handlePartChange}
-    on:studentchange={handleStudentChange} />
+    on:change={handleDatachange} />
 {/if}

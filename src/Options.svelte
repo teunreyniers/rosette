@@ -340,6 +340,7 @@
   <Collapsible header={$_('options.lines.title')} defaultState={false}>
     {#each lines as line, index (line.key)}
       <LineStyleForm
+        key={line.key}
         title={$_(`properties.${line.key}`)}
         color={line.color}
         style={line.style}

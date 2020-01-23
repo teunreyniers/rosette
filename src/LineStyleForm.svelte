@@ -2,8 +2,9 @@
   import { createEventDispatcher } from "svelte";
   import ColorSelector from "./ColorSelector.svelte";
   import DragInput from "./DragInput.svelte";
-  import { _ } from "svelte-i18n"
+  import { _ } from "svelte-i18n";
 
+  export let key;
   export let title;
   export let width;
   export let style;
@@ -14,7 +15,7 @@
 
   function createChangeHandler(prop) {
     return event => {
-      const payload = { title, width, style, color, cap };
+      const payload = { key, width, style, color, cap };
       payload[prop] = event.target ? event.target.value : event.detail.value;
       dispatch("linestylechange", payload);
     };
@@ -60,7 +61,7 @@
     size={1}
     step={0.05}
     value={width}
-    on:input={createChangeHandler('width')} />
+    on:change={createChangeHandler('width')} />
   <label>{$_('properties.line_patern')}</label>
   <select value={style} on:change={createChangeHandler('style')}>
     <option value="none">{$_('properties.line_patern_solid')}</option>

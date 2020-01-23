@@ -90,8 +90,8 @@
     {#if label.readonly}
       <label>{label.name}</label>
     {:else}
-      <input size="5" value={label.name} on:input={handleInput('name')} />
-      <input size="5" value={label.value} on:input={handleInput('value')} />
+      <input size="5" value={label.name} on:change={handleInput('name')} />
+      <input size="5" value={label.value} on:change={handleInput('value')} />
     {/if}
   </div>
   <div class="body">
@@ -101,7 +101,7 @@
         size="1"
         min={-Infinity}
         value={label.xpos}
-        on:input={handleInput('xpos')} />
+        on:change={handleInput('xpos')} />
     </div>
     <div>
       <label>{$_('properties.ypos')}</label>
@@ -109,22 +109,22 @@
         size="1"
         min={-Infinity}
         value={label.ypos}
-        on:input={handleInput('ypos')} />
+        on:change={handleInput('ypos')} />
     </div>
     <div>
       <label>{$_('properties.size')}</label>
-      <DragInput size="1" value={label.size} on:input={handleInput('size')} />
+      <DragInput size="1" value={label.size} on:change={handleInput('size')} />
     </div>
     <div>
       <label>{$_('properties.weight')}</label>
       <DragInput
         size="1"
         value={label.weight}
-        on:input={handleInput('weight')} />
+        on:change={handleInput('weight')} />
     </div>
     <div>
       <label>{$_('properties.angle')}</label>
-      <DragInput size="1" value={label.angle} on:input={handleInput('angle')} />
+      <DragInput size="1" value={label.angle} on:change={handleInput('angle')} />
     </div>
     <div>
       <label>{$_('properties.align')}</label>

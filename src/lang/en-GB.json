@@ -1,5 +1,6 @@
 {
   "about": "about",
+  "about_msg": "<p>This site is created to make rosette's easy in bulk. A rosette is a visualisation for the result of a test. By visualising the different categories of the test a student can see witch parts are known and witch can still improve.</p><p>Currently this site is under construction</p>",
   "data_editor": {
     "done": "Done",
     "new_student": "new student",
@@ -53,6 +54,7 @@
   },
   "page_title": "Roset | Create your rosetts",
   "privacy": "privacy",
+  "privacy_msg": "<p>We value your privacy. Therefor no personal data is send to our servers. Even better all the data is procced localy on your machine. We don't track you and don't serve advertenties. This is possiple because the site run's on the free tier of Azure Web Services</p>",
   "properties": {
     "align": "Align",
     "align_center": "Center",

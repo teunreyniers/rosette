@@ -89,7 +89,7 @@
         size="1"
         min={-Infinity}
         value={textoptions.xpos}
-        on:input={handleInput('xpos')} />
+        on:change={handleInput('xpos')} />
     </div>
     <div>
       <label>{$_('properties.yoffset')}</label>
@@ -97,28 +97,28 @@
         size="1"
         min={-Infinity}
         value={textoptions.ypos}
-        on:input={handleInput('ypos')} />
+        on:change={handleInput('ypos')} />
     </div>
     <div>
       <label>{$_('properties.sizze')}</label>
       <DragInput
         size="1"
         value={textoptions.size}
-        on:input={handleInput('size')} />
+        on:change={handleInput('size')} />
     </div>
     <div>
       <label>{$_('properties.weight')}</label>
       <DragInput
         size="1"
         value={textoptions.weight}
-        on:input={handleInput('weight')} />
+        on:change={handleInput('weight')} />
     </div>
     <div>
       <label>{$_('properties.angle')}</label>
       <DragInput
         size="1"
         value={textoptions.angle}
-        on:input={handleInput('angle')} />
+        on:change={handleInput('angle')} />
     </div>
     <div>
       <label>{$_('properties.align')}</label>

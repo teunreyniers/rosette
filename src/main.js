@@ -5,7 +5,7 @@ import enGB from './lang/en-GB.json'
 import enUS from './lang/en-US.json'
 import nl from './lang/nl.json'
 
-addMessages('en-BR', enGB)
+addMessages('en-GB', enGB)
 addMessages('en-US', enUS)
 addMessages('nl', nl)
 
