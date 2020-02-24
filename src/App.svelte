@@ -9,9 +9,11 @@
   import Nav from "./Nav.svelte";
   import DataEditor from "./DataEditor.svelte";
   import { onMount, tick } from "svelte";
-  import { move, createUUID } from "./utils";
+  import { move } from "./utils";
   import { getSectionByIndex } from "./gradeCalculator";
   import { createPdf, createZip } from "./converter";
+  import { v4 as uuidv4 } from "uuid";
+  import { parseSheet } from "./dataparser";
 
   let state = {
     lines: {
@@ -193,7 +195,7 @@
       color: "#000000"
     },
     {
-      key: createUUID(),
+      key: uuidv4(),
       readonly: false,
       name: $_("options.labels.course_name_label"),
       value: $_("options.labels.course_name_label"),
@@ -206,7 +208,7 @@
       color: "#000000"
     },
     {
-      key: createUUID(),
+      key: uuidv4(),
       readonly: false,
       name: $_("options.labels.copyright_label"),
       value: $_("options.labels.copyright_value"),
@@ -233,11 +235,11 @@
     pdf_height: 500
   };
 
-  let workbook = {}
+  let workbook = {};
   let file = {
     sheets: [],
-    selectedsheet: "",
-  }
+    selectedsheet: ""
+  };
 
   let dataoptions = {
     mode: "simple",
@@ -268,7 +270,7 @@
         grades = grades.filter((_, i) => detail.index != i);
         break;
       case "add":
-        grades = [{ key: createUUID(), value: "#ffffff" }, ...grades];
+        grades = [{ key: uuidv4(), value: "#ffffff" }, ...grades];
         break;
       case "change":
         grades[detail.index] = detail.value;
@@ -285,7 +287,7 @@
         labels = [
           ...labels,
           {
-            key: createUUID(),
+            key: uuidv4(),
             readonly: false,
             name: "<name>",
             value: "<value>",
@@ -362,15 +364,24 @@
 
   function handleDatachange({ detail }) {
     const { target, action } = detail;
-    if (target === "file"){
-      if (action === "file"){
-        workbook = detail.value
-        file.sheets = workbook.SheetNames
-      }else if(action === "selectedsheet")
-      {
-        file.selectedsheet = detail.value
-        console.log(workbook.Sheets[file.selectedsheet]);
-        
+    if (target === "file") {
+      if (action === "file") {
+        workbook = detail.value;
+        file.sheets = workbook.SheetNames;
+        const sheet = workbook.Sheets[file.sheets[0]]
+        if (sheet && sheet["!ref"]) {
+          const result = parseSheet(sheet);
+          students = result.students;
+          sections = result.sections;
+        }
+      } else if (action === "selectedsheet") {
+        file.selectedsheet = detail.value;
+        const sheet = workbook.Sheets[file.selectedsheet];
+        if (sheet && sheet["!ref"]) {
+          const result = parseSheet(sheet);
+          students = result.students;
+          sections = result.sections;
+        }
       }
     } else if (target === "dataoptions") {
       if (action === "modechange") {
@@ -395,7 +406,7 @@
         students = [
           ...students,
           {
-            key: createUUID(),
+            key: uuidv4(),
             name: detail.value
           }
         ];
@@ -408,7 +419,7 @@
       } else if (action === "add") {
         sections = [
           ...sections,
-          { key: createUUID(), name: "new section", parts: [] }
+          { key: uuidv4(), name: "new section", parts: [] }
         ];
       } else if (action === "change") {
         sections[detail.index].name = detail.value;
@@ -434,7 +445,7 @@
         sections[detail.sectionindex].parts = [
           ...sections[detail.sectionindex].parts,
           {
-            key: createUUID(),
+            key: uuidv4(),
             name: "<name>",
             tbs: "",
             threshold: "",
