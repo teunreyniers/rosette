@@ -1,6 +1,4 @@
 <script>
-  import moment from "moment";
-  import FileSaver from "file-saver";
   import { _ } from "svelte-i18n";
 
   import Grid from "./Grid.svelte";
@@ -258,7 +256,7 @@
     key: student.key
   }));
 
-  let isEditRecordsOpen = true;
+  let isEditRecordsOpen = false;
 
   function handleGradechange({ detail }) {
     const { action } = detail;
