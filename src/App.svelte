@@ -1,7 +1,6 @@
 <script>
   import moment from "moment";
   import FileSaver from "file-saver";
-  import converter from "./converter";
   import { _ } from "svelte-i18n";
 
   import Grid from "./Grid.svelte";
@@ -10,6 +9,79 @@
   import Nav from "./Nav.svelte";
   import DataEditor from "./DataEditor.svelte";
   import { onMount, tick } from "svelte";
+  import { move, createUUID } from "./utils";
+  import { getSectionByIndex } from "./gradeCalculator";
+  import { createPdf, createZip } from "./converter";
+
+  let state = {
+    lines: {
+      sections: {
+        width: 0.9,
+        style: "none",
+        color: "#666666",
+        cap: "round"
+      },
+      parts: {
+        width: 0.7,
+        style: "none",
+        color: "#999999",
+        cap: "round"
+      },
+      grades: {
+        width: 0.7,
+        style: "none",
+        color: "#999999",
+        cap: "round"
+      }
+    },
+    textoptions: {
+      sections: {
+        title: $_("properties.sections"),
+        readonly: false,
+        name: "Student name",
+        value: "<name>",
+        xpos: 0,
+        ypos: 5,
+        size: 14,
+        weight: 200,
+        angle: 0,
+        anchor: "middle",
+        color: "#000000",
+        curve: "normal",
+        flip: "none"
+      },
+      parts: {
+        title: $_("properties.parts"),
+        readonly: false,
+        name: "Student name",
+        value: "<name>",
+        xpos: 0,
+        ypos: 0,
+        size: 9,
+        weight: 400,
+        angle: 0,
+        anchor: "middle",
+        color: "#000000",
+        curve: "normal",
+        flip: "none"
+      },
+      grades: {
+        title: $_("properties.grades"),
+        readonly: false,
+        name: "Student name",
+        value: "<name>",
+        xpos: 0,
+        ypos: 30,
+        size: 6,
+        weight: 400,
+        angle: 0,
+        anchor: "middle",
+        color: "#000000",
+        curve: "normal",
+        flip: "none"
+      }
+    }
+  };
 
   let creator;
   let creatorIndex = 0;
@@ -121,7 +193,7 @@
       color: "#000000"
     },
     {
-      key: CreateUUID(),
+      key: createUUID(),
       readonly: false,
       name: $_("options.labels.course_name_label"),
       value: $_("options.labels.course_name_label"),
@@ -134,7 +206,7 @@
       color: "#000000"
     },
     {
-      key: CreateUUID(),
+      key: createUUID(),
       readonly: false,
       name: $_("options.labels.copyright_label"),
       value: $_("options.labels.copyright_value"),
@@ -148,26 +220,7 @@
     }
   ];
   let spaces = [2, 1, 1, 1, 0.7, 0.3];
-  let lines = {
-    sections: {
-      width: 0.9,
-      style: "none",
-      color: "#666666",
-      cap: "round"
-    },
-    parts: {
-      width: 0.7,
-      style: "none",
-      color: "#999999",
-      cap: "round"
-    },
-    grades: {
-      width: 0.7,
-      style: "none",
-      color: "#999999",
-      cap: "round"
-    }
-  };
+
   let layout = {
     size_x: 250,
     size_y: 290,
@@ -179,53 +232,12 @@
     png_width: 2048,
     pdf_height: 500
   };
-  let textoptions = {
-    sections: {
-      title: $_("properties.sections"),
-      readonly: false,
-      name: "Student name",
-      value: "<name>",
-      xpos: 0,
-      ypos: 5,
-      size: 14,
-      weight: 200,
-      angle: 0,
-      anchor: "middle",
-      color: "#000000",
-      curve: "normal",
-      flip: "none"
-    },
-    parts: {
-      title: $_("properties.parts"),
-      readonly: false,
-      name: "Student name",
-      value: "<name>",
-      xpos: 0,
-      ypos: 0,
-      size: 9,
-      weight: 400,
-      angle: 0,
-      anchor: "middle",
-      color: "#000000",
-      curve: "normal",
-      flip: "none"
-    },
-    grades: {
-      title: $_("properties.grades"),
-      readonly: false,
-      name: "Student name",
-      value: "<name>",
-      xpos: 0,
-      ypos: 30,
-      size: 6,
-      weight: 400,
-      angle: 0,
-      anchor: "middle",
-      color: "#000000",
-      curve: "normal",
-      flip: "none"
-    }
-  };
+
+  let workbook = {}
+  let file = {
+    sheets: [],
+    selectedsheet: "",
+  }
 
   let dataoptions = {
     mode: "simple",
@@ -246,37 +258,17 @@
 
   let isEditRecordsOpen = true;
 
-  function CreateUUID() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-      (
-        c ^
-        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-      ).toString(16)
-    );
-  }
-
-  function array_move(arr, old_index, new_index) {
-    if (new_index >= arr.length) {
-      var k = new_index - arr.length + 1;
-      while (k--) {
-        arr.push(undefined);
-      }
-    }
-    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-    return arr; // for testing
-  }
-
   function handleGradechange({ detail }) {
     const { action } = detail;
     switch (action) {
       case "reorder":
-        grades = array_move(grades, detail.from, detail.to);
+        grades = move(grades, detail.from, detail.to);
         break;
       case "delete":
         grades = grades.filter((_, i) => detail.index != i);
         break;
       case "add":
-        grades = [{ key: CreateUUID(), value: "#ffffff" }, ...grades];
+        grades = [{ key: createUUID(), value: "#ffffff" }, ...grades];
         break;
       case "change":
         grades[detail.index] = detail.value;
@@ -286,61 +278,6 @@
     }
   }
 
-  function getSectionByIndex(sections, index, dataoptions) {
-    const r = sections.map(e => ({
-      ...e,
-      parts: e.parts
-        .map(p => ({
-          ...p,
-          devitions: getDeviations(p, index, dataoptions)
-        }))
-        .filter(p => p.devitions !== undefined)
-    }));
-
-    return r;
-  }
-
-  function getDeviations(part, index, dataoptions) {
-    const value = part.scores[index];
-    if (value === "") return undefined;
-    if (dataoptions.mode === "normal") {
-      return getIndexNormal(
-        dataoptions.thresholds.map(e => parseFloat(e)),
-        parseFloat(value) / parseFloat(part.tbs)
-      );
-    } else if (dataoptions.mode === "advanced") {
-      return getIndexAdvanced(
-        dataoptions.thresholds.map(e => parseFloat(e)),
-        parseFloat(value) / parseFloat(part.tbs),
-        parseFloat(dataoptions.threshold)
-      );
-    } else {
-      return value;
-    }
-  }
-
-  function getIndexNormal(thresholds, value) {
-    let i = thresholds.length - 1;
-    while (value < thresholds[i] && i >= 0) {
-      i -= 1;
-    }
-    return i + 2;
-  }
-
-  function getIndexAdvanced(thresholds, value, threshold) {
-    let i = thresholds.length - 1;
-    while (
-      value <
-        threshold +
-          ((thresholds[i] - thresholds[0]) / (1 - thresholds[0])) *
-            (1 - threshold) &&
-      i >= 0
-    ) {
-      i -= 1;
-    }
-    return i + 2;
-  }
-
   function handleLabelChange({ detail }) {
     const { action } = detail;
     switch (action) {
@@ -348,7 +285,7 @@
         labels = [
           ...labels,
           {
-            key: CreateUUID(),
+            key: createUUID(),
             readonly: false,
             name: "<name>",
             value: "<value>",
@@ -392,38 +329,16 @@
     }
   }
 
-  function handleLineStyleChanged({ detail }) {
-    const { key, ...style } = detail;
-    lines[key] = style;
-  }
-
-  function handleTextoptionsChange({ detail }) {
-    const { key, ...options } = detail;
-    textoptions[key] = options;
-  }
-
-  async function createZip(event) {
-    const papers = {
-      a4: {
-        name: "A4",
-        size: { x: 595.28, y: 841.89 }
-      },
-      a5: {
-        name: "A5",
-        size: { x: 595.28, y: 841.89 }
-      },
-      a6: {
-        name: "A6",
-        size: { x: 595.28, y: 841.89 }
-      },
-      letter: {
-        name: "LETTER",
-        size: { x: 595.28, y: 841.89 }
-      }
+  function createKeyValueChangeHandler(name) {
+    return ({ detail }) => {
+      const { key, ...value } = detail;
+      [name][key] = value;
     };
+  }
 
+  async function handleDownloadFile(event) {
+    // Loop through every student and generate svg code
     const items = [];
-
     creatorIndex = 0;
     await tick();
     for (let i = 0; i < students.length; i++) {
@@ -437,42 +352,27 @@
     }
     creatorIndex = 0;
 
+    // Convert the svg code to the desired file format
     if (event.detail.type === "1pdf") {
-      const blob = await converter.pdf(items, {
-        size: papers[layout.papersize].name,
-        height: layout.pdf_height
-      });
-      FileSaver.saveAs(
-        blob,
-        `rosettes ${moment().format("YYYY-MM-DD h-mm")}.pdf`
-      );
-      return;
+      createPdf(items, layout);
+    } else {
+      createZip(items, event.detail.type, layout);
     }
-
-    let blob;
-    if (event.detail.type === "svg") {
-      blob = await converter.svgzip(items, {});
-    } else if (event.detail.type === "pdf") {
-      blob = await converter.pdfzip(items, {
-        size: papers[layout.papersize].name,
-        height: layout.pdf_height
-      });
-    } else if (event.detail.type === "png") {
-      blob = await converter.pngzip(items, {
-        width: layout.png_width,
-        height: layout.png_height
-      });
-    }
-
-    FileSaver.saveAs(
-      blob,
-      `rosettes ${moment().format("YYYY-MM-DD h-mm")}.zip`
-    );
   }
 
   function handleDatachange({ detail }) {
     const { target, action } = detail;
-    if (target === "dataoptions") {
+    if (target === "file"){
+      if (action === "file"){
+        workbook = detail.value
+        file.sheets = workbook.SheetNames
+      }else if(action === "selectedsheet")
+      {
+        file.selectedsheet = detail.value
+        console.log(workbook.Sheets[file.selectedsheet]);
+        
+      }
+    } else if (target === "dataoptions") {
       if (action === "modechange") {
         dataoptions.mode = detail.value;
       } else if (action === "change_threshold") {
@@ -495,20 +395,20 @@
         students = [
           ...students,
           {
-            key: CreateUUID(),
+            key: createUUID(),
             name: detail.value
           }
         ];
       }
     } else if (target === "sections") {
       if (action === "reorder") {
-        sections = array_move(sections, detail.from, detail.to);
+        sections = move(sections, detail.from, detail.to);
       } else if (action === "delete") {
         sections = sections.filter((_, i) => detail.index != i);
       } else if (action === "add") {
         sections = [
           ...sections,
-          { key: CreateUUID(), name: "new section", parts: [] }
+          { key: createUUID(), name: "new section", parts: [] }
         ];
       } else if (action === "change") {
         sections[detail.index].name = detail.value;
@@ -534,7 +434,7 @@
         sections[detail.sectionindex].parts = [
           ...sections[detail.sectionindex].parts,
           {
-            key: CreateUUID(),
+            key: createUUID(),
             name: "<name>",
             tbs: "",
             threshold: "",
@@ -602,9 +502,9 @@
     labels={rosettes[creatorIndex].labels}
     {spaces}
     {devitions}
-    {lines}
+    lines={state.lines}
     {layout}
-    {textoptions}
+    textoptions={state.textoptions}
     key={rosettes[creatorIndex].key} />
   <!-- {/if} -->
 </div>
@@ -617,19 +517,19 @@
     {spaces}
     {devitions}
     {layout}
-    lines={Object.keys(lines).map(key => ({ ...lines[key], key }))}
-    textoptions={Object.keys(textoptions).map(key => ({
-      ...textoptions[key],
+    lines={Object.keys(state.lines).map(key => ({ ...state.lines[key], key }))}
+    textoptions={Object.keys(state.textoptions).map(key => ({
+      ...state.textoptions[key],
       key
     }))}
     on:gradechange={handleGradechange}
     on:dataEditor={() => (isEditRecordsOpen = true)}
     on:labelchange={handleLabelChange}
     on:spacechange={handleSpaceChange}
-    on:linestylechange={handleLineStyleChanged}
-    on:textoptionschange={handleTextoptionsChange}
+    on:linestylechange={createKeyValueChangeHandler('lines')}
+    on:textoptionschange={createKeyValueChangeHandler('textoptions')}
     on:layoutchange={e => (layout = e.detail)}
-    on:exportAll={createZip} />
+    on:exportAll={handleDownloadFile} />
   <Grid
     items={rosettes}
     let:item={rosette}
@@ -643,9 +543,9 @@
       labels={rosette.labels}
       {spaces}
       {devitions}
-      {lines}
+      lines={state.lines}
       {layout}
-      {textoptions}
+      textoptions={state.textoptions}
       key={rosette.key} />
   </Grid>
 </div>
@@ -655,6 +555,7 @@
     {sections}
     {students}
     {dataoptions}
+    {file}
     on:close={() => (isEditRecordsOpen = false)}
     on:change={handleDatachange} />
 {/if}

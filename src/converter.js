@@ -1,7 +1,26 @@
 import JSZip from "jszip";
-import PDFDocument from "./pdfkit.standalone";
+import PDFDocument from "./libs/pdfkit.standalone";
 import SVGtoPDF from "svg-to-pdfkit";
 import blobStream from "blob-stream";
+
+const paper_sizes = {
+  a4: {
+    name: "A4",
+    size: { x: 595.28, y: 841.89 }
+  },
+  a5: {
+    name: "A5",
+    size: { x: 595.28, y: 841.89 }
+  },
+  a6: {
+    name: "A6",
+    size: { x: 595.28, y: 841.89 }
+  },
+  letter: {
+    name: "LETTER",
+    size: { x: 595.28, y: 841.89 }
+  }
+};
 
 export function pdfzip(items, options) {
   return new Promise(async (resolve) => {
@@ -37,13 +56,13 @@ export function pdf(items, options) {
       return resolve(blob)
     })
     for (let i = 0; i < items.length; i++) {
-      if(i !== 0){
+      if (i !== 0) {
         doc.addPage()
       }
       SVGtoPDF(doc, items[i].svg, 0, options.top || 72, {
         preserveAspectRatio: "xMidYMin meet",
         height: options.height || 500
-      });      
+      });
     }
     doc.end();
   })
@@ -98,6 +117,40 @@ function createpng(svgtext) {
     };
     img.src = url;
   })
+}
+
+export async function createPdf(items, layout) {
+  const blob = await pdf(items, {
+    size: paper_sizes[layout.papersize].name,
+    height: layout.pdf_height
+  });
+  FileSaver.saveAs(
+    blob,
+    `rosettes ${moment().format("YYYY-MM-DD h-mm")}.pdf`
+  );
+}
+
+export async function createZip(items, type, layout) {
+
+  let blob;
+  if (type === "svg") {
+    blob = await svgzip(items, {});
+  } else if (type === "pdf") {
+    blob = await pdfzip(items, {
+      size: paper_sizes[layout.papersize].name,
+      height: layout.pdf_height
+    });
+  } else if (type === "png") {
+    blob = await pngzip(items, {
+      width: layout.png_width,
+      height: layout.png_height
+    });
+  }
+
+  FileSaver.saveAs(
+    blob,
+    `rosettes ${moment().format("YYYY-MM-DD h-mm")}.zip`
+  );
 }
 
 export default {

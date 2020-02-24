@@ -3,10 +3,12 @@
   import { createEventDispatcher, tick } from "svelte";
   import { slide } from "svelte/transition";
   import { _ } from "svelte-i18n";
+  import XLSX from "xlsx";
 
   export let students;
   export let sections;
   export let dataoptions;
+  export let file;
 
   const dispatch = createEventDispatcher();
 
@@ -126,6 +128,23 @@
       });
       event.target.value = "";
     }
+  }
+
+  function handleFile(e) {
+    var files = e.target.files,
+      f = files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var data = new Uint8Array(e.target.result);
+      var workbook = XLSX.read(data, { type: "array" });
+
+      dispatch("change", {
+        target: "file",
+        action: "file",
+        value: workbook
+      });
+    };
+    reader.readAsArrayBuffer(f);
   }
 </script>
 
@@ -358,6 +377,12 @@
   .options label {
     margin: auto 2px;
   }
+
+  .filedropper {
+    height: 100px;
+    width: 100px;
+    background: red;
+  }
 </style>
 
 {#if sections && students}
@@ -366,7 +391,7 @@
       <h2>{$_('data_editor.title')}</h2>
       <button on:click={() => dispatch('close')}>
         {$_('data_editor.done')}
-      </button>
+      </button>      
     </div>
     <div class="options">
       <div>
@@ -377,7 +402,7 @@
           <option value="simple">Simple</option>
           <option value="normal">Normal</option>
           <option value="advanced">Advanced</option>
-        </select>
+        </select>        
       </div>
       {#if dataoptions.mode !== 'simple'}
         <label>Thresholds</label>
@@ -401,7 +426,12 @@
             on:keydown={notab} />
         </div>
       {/if}
-
+      <input type="file" on:change={handleFile} />
+      <select value={file.selectedsheet} on:change={createChangeHandler("file", "selectedsheet")}>
+      {#each file.sheets as sheet}
+        <option>{sheet}</option>
+      {/each}
+      </select>
     </div>
     <div class="students">
       <div class="cell label" />
@@ -487,7 +517,7 @@
                         index: partindex,
                         sectionindex
                       })}
-                      on:keydown={tabstop}/>
+                      on:keydown={tabstop} />
                   </div>
                   {#if dataoptions.mode === 'normal' || dataoptions.mode === 'advanced'}
                     <div class="cell">
@@ -497,8 +527,8 @@
                         on:change={createChangeHandler('parts', 'tbs_change', {
                           index: partindex,
                           sectionindex
-                        })} 
-                        on:keydown={tabstop}/>
+                        })}
+                        on:keydown={tabstop} />
                     </div>
                   {/if}
                   {#if dataoptions.mode === 'advanced'}
@@ -513,8 +543,8 @@
                             index: partindex,
                             sectionindex
                           }
-                        )} 
-                        on:keydown={tabstop}/>
+                        )}
+                        on:keydown={tabstop} />
                     </div>
                   {/if}
                   {#each part.scores as score, cellindex}

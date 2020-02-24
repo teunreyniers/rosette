@@ -60,7 +60,7 @@
     min-width: 60px;
   }
 
-  .z {
+  .z-1000 {
     z-index: 1000;
   }
 </style>
@@ -75,7 +75,7 @@
     on:input={() => dispatch('change', { value: color, key })} />
   {#if colorPickerOpen}
     <div
-      class="z"
+      class="z-1000"
       bind:offsetWidth={colorPickerLeft}
       bind:offsetHeight={colorPickerTop}>
       <HsvPicker
