@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml"
+ xmlns:xlink="http://www.w3.org/1999/xlink" 
+ viewBox="-125 -170 250 290"
+ height="350px">
+  <rect width="250" height="290" fill="white" x="-125" y="-170"/>
+  <path fill="#c3f0ca" stroke="#c3f0ca" stroke-width="0.2" d="M66.66666666666666 0 A66.66666666666666 66.66666666666666
+        1 0 1 33.333333333333336 57.73502691896257 L0 0
+        Z"></path><path id="part-name-dd-0" d="M85.66666666666667 0
+        A85.66666666666667 85.66666666666667 0 0
+        1 42.83333333333334 74.1895095908669" fill="none"></path><text fill="#000000" font-family="sans-serif" font-size="9" font-weight="400" transform="rotate(0
+      74.18950959086692 42.83333333333333)"><textPath xlink:href="#part-name-dd-0" startOffset="50%" text-anchor="middle">addition</textPath></text><path fill="#abd1c6" stroke="#abd1c6" stroke-width="0.2" d="M41.66666666666668 72.16878364870323 A83.33333333333334 83.33333333333334
+        1 0 1 -41.66666666666665 72.16878364870324 L0 0
+        Z"></path><path id="part-name-dd-1" d="M42.83333333333334 74.1895095908669
+        A85.66666666666667 85.66666666666667 0 0
+        1 -42.833333333333314 74.18950959086692" fill="none"></path><text fill="#000000" font-family="sans-serif" font-size="9" font-weight="400" transform="rotate(0
+      5.24557045634783e-15 85.66666666666667)"><textPath xlink:href="#part-name-dd-1" startOffset="50%" text-anchor="middle">subtraction</textPath></text><path fill="#ffc6c7" stroke="#ffc6c7" stroke-width="0.2" d="M-24.99999999999999 43.30127018922194 A50 50
+        1 0 1 -50 6.123233995736766e-15 L0 0
+        Z"></path><path id="part-name-dd-2" d="M-42.833333333333314 74.18950959086692
+        A85.66666666666667 85.66666666666667 0 0
+        1 -85.66666666666667 1.049114091269566e-14" fill="none"></path><text fill="#000000" font-family="sans-serif" font-size="9" font-weight="400" transform="rotate(0
+      -74.18950959086692 42.83333333333333)"><textPath xlink:href="#part-name-dd-2" startOffset="50%" text-anchor="middle">multiplication</textPath></text><path fill="#c3f0ca" stroke="#c3f0ca" stroke-width="0.2" d="M-66.66666666666666 8.164311994315688e-15 A66.66666666666666 66.66666666666666
+        1 0 1 -33.33333333333336 -57.73502691896256 L0 0
+        Z"></path><path id="part-name-dd-3" d="M-85.66666666666667 1.049114091269566e-14
+        A85.66666666666667 85.66666666666667 0 0
+        1 -42.83333333333337 -74.1895095908669" fill="none"></path><text fill="#000000" font-family="sans-serif" font-size="9" font-weight="400" transform="rotate(0
+      -74.18950959086693 -42.833333333333314)"><textPath xlink:href="#part-name-dd-3" startOffset="50%" text-anchor="middle">addition</textPath></text><path fill="#ffc6c7" stroke="#ffc6c7" stroke-width="0.2" d="M-25.00000000000002 -43.301270189221924 A50 50
+        1 0 1 25.000000000000007 -43.30127018922193 L0 0
+        Z"></path><path id="part-name-dd-4" d="M-42.83333333333337 -74.1895095908669
+        A85.66666666666667 85.66666666666667 0 0
+        1 42.83333333333334 -74.1895095908669" fill="none"></path><text fill="#000000" font-family="sans-serif" font-size="9" font-weight="400" transform="rotate(0
+      -1.573671136904349e-14 -85.66666666666667)"><textPath xlink:href="#part-name-dd-4" startOffset="50%" text-anchor="middle">subtraction</textPath></text><path fill="#ff8ba7" stroke="#ff8ba7" stroke-width="0.2" d="M16.666666666666668 -28.867513459481284 A33.33333333333333 33.33333333333333
+        1 0 1 33.33333333333333 -8.164311994315688e-15 L0 0
+        Z"></path><path id="part-name-dd-5" d="M42.83333333333334 -74.1895095908669
+        A85.66666666666667 85.66666666666667 0 0
+        1 85.66666666666667 -2.098228182539132e-14" fill="none"></path><text fill="#000000" font-family="sans-serif" font-size="9" font-weight="400" transform="rotate(0
+      74.18950959086689 -42.83333333333337)"><textPath xlink:href="#part-name-dd-5" startOffset="50%" text-anchor="middle">multiplication</textPath></text><circle class="circle" cx="0" cy="0" r="95" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round" fill="none"></circle><circle class="circle" cx="0" cy="0" r="83.33333333333334" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round" fill="none"></circle><circle class="circle" cx="0" cy="0" r="66.66666666666666" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round" fill="none"></circle><circle class="circle" cx="0" cy="0" r="50" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round" fill="none"></circle><circle class="circle" cx="0" cy="0" r="33.33333333333333" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round" fill="none"></circle><path d="M0 0 L95 0" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round"></path><path d="M0 0 L47.50000000000001 82.27241335952166" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round"></path><path d="M0 0 L-47.49999999999998 82.27241335952168" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round"></path><path d="M0 0 L-95 1.1634144591899855e-14" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round"></path><path d="M0 0 L-47.50000000000004 -82.27241335952165" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round"></path><path d="M0 0 L47.50000000000001 -82.27241335952166" stroke="#999999" stroke-width="0.7" stroke-dasharray="none" stroke-linecap="round"></path><path d="M0 0 L100 0" stroke="#666666" stroke-width="0.9" stroke-dasharray="none" stroke-linecap="round"></path><path id="section-name-dd-0" d="M102.33333333333333 0
+        A102.33333333333333 102.33333333333333
+        0 0 1 -102.33333333333333 1.2532218911274581e-14" fill="none"></path><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="200" transform="rotate(0
+      6.2661094556372904e-15 102.33333333333333)"><textPath xlink:href="#section-name-dd-0" startOffset="50%" text-anchor="middle">Real numbers</textPath></text><path d="M0 0 L-100 1.2246467991473532e-14" stroke="#666666" stroke-width="0.9" stroke-dasharray="none" stroke-linecap="round"></path><path id="section-name-dd-1" d="M-102.33333333333333 1.2532218911274581e-14
+        A102.33333333333333 102.33333333333333
+        0 0 1 102.33333333333333 -2.5064437822549162e-14" fill="none"></path><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="200" transform="rotate(0
+      -1.879832836691187e-14 -102.33333333333333)"><textPath xlink:href="#section-name-dd-1" startOffset="50%" text-anchor="middle">Complex numbers</textPath></text><text x="0" y="-9.999999999999998" font-size="6" font-family="sans-serif" font-weight="400" transform="rotate(0
+      0
+      -9.999999999999998)" text-anchor="middle" fill="#000000">Can Better</text><text x="0" y="-38.33333333333333" font-size="6" font-family="sans-serif" font-weight="400" transform="rotate(0
+      0
+      -38.33333333333333)" text-anchor="middle" fill="#000000">Fine</text><text x="0" y="-55" font-size="6" font-family="sans-serif" font-weight="400" transform="rotate(0
+      0
+      -55)" text-anchor="middle" fill="#000000">Good</text><text x="0" y="-71.66666666666666" font-size="6" font-family="sans-serif" font-weight="400" transform="rotate(0
+      0
+      -71.66666666666666)" text-anchor="middle" fill="#000000">Super</text><text x="0" y="-145" font-family="sans-serif" font-size="18" font-weight="600" transform="rotate(0
+      0
+      -145)" text-anchor="middle" fill="#000000">John Maes</text><text x="0" y="-130" font-family="sans-serif" font-size="12" font-weight="200" transform="rotate(0
+      0
+      -130)" text-anchor="middle" fill="#000000">Mathematics</text><text x="-120" y="115" font-family="sans-serif" font-size="3" font-weight="400" transform="rotate(0
+      -120
+      115)" text-anchor="left" fill="#000000">Gemaakt met Rosette (https://rosette.azurewebsites.net)</text><text></text></svg>
