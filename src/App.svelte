@@ -332,7 +332,7 @@
   function createKeyValueChangeHandler(name) {
     return ({ detail }) => {
       const { key, ...value } = detail;
-      [name][key] = value;
+      state[name][key] = value;
     };
   }
 
@@ -439,6 +439,7 @@
         sections[detail.sectionindex].parts = sections[
           detail.sectionindex
         ].parts.filter((_, i) => detail.index != i);
+        sections = sections
       } else if (action === "add") {
         sections[detail.sectionindex].parts = [
           ...sections[detail.sectionindex].parts,
@@ -450,6 +451,7 @@
             scores: Array(students.length).fill("")
           }
         ];
+        sections = sections
       } else if (action === "name_change") {
         sections[detail.sectionindex].parts[detail.index] = {
           ...sections[detail.sectionindex].parts[detail.index],

@@ -354,10 +354,4 @@
       <TextForm textoptions={option} on:textoptionschange />
     {/each}
   </Collapsible>
-  <Collapsible header="Include" defaultState={false}>
-    <div class="labelvalue">
-      <label>Legend</label>
-      <input type="checkbox" />
-    </div>
-  </Collapsible>
 </div>

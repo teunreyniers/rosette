@@ -441,7 +441,7 @@
       {#if dataoptions.mode === 'advanced'}
         <div class="cell label">Threshhold</div>
       {/if}
-      {#each students as student, index}
+      {#each students as student, index (student.key)}
         <div class="cell">
           <input
             size="1"
@@ -484,7 +484,7 @@
                 size="1"
                 title={section.name}
                 value={section.name}
-                on:click={createChangeHandler('sections', 'change', {
+                on:change={createChangeHandler('sections', 'change', {
                   index: sectionindex
                 })} />
               <button

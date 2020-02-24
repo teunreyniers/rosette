@@ -100,7 +100,7 @@
         on:change={handleInput('ypos')} />
     </div>
     <div>
-      <label>{$_('properties.sizze')}</label>
+      <label>{$_('properties.size')}</label>
       <DragInput
         size="1"
         value={textoptions.size}
