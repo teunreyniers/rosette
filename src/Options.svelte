@@ -8,7 +8,7 @@
   import DragSelect from "./DragSelect.svelte";
   import LineStyleForm from "./LineStyleForm.svelte";
   import TextForm from "./TextForm.svelte";
-  import { _ } from 'svelte-i18n';
+  import { _ } from "svelte-i18n";
 
   export let grades;
   export let labels;
@@ -163,11 +163,21 @@
 </style>
 
 <div class="background">
-  <button on:click={() => dispatch('dataEditor')}>{$_('options.edit_records')}</button>
-  <button on:click={() => dispatch('exportAll', { type: 'svg' })}>{$_('options.download_as.svg')}</button>
-  <button on:click={() => dispatch('exportAll', { type: 'pdf' })}>{$_('options.download_as.pdf')}</button>
-  <button on:click={() => dispatch('exportAll', { type: 'png' })}>{$_('options.download_as.png')}</button>
-  <button on:click={() => dispatch('exportAll', { type: '1pdf' })}>{$_('options.download_as.1pdf')}</button>
+  <button on:click={() => dispatch('dataEditor')}>
+    {$_('options.edit_records')}
+  </button>
+  <button on:click={() => dispatch('exportAll', { type: 'svg' })}>
+    {$_('options.download_as.svg')}
+  </button>
+  <button on:click={() => dispatch('exportAll', { type: 'pdf' })}>
+    {$_('options.download_as.pdf')}
+  </button>
+  <button on:click={() => dispatch('exportAll', { type: 'png' })}>
+    {$_('options.download_as.png')}
+  </button>
+  <button on:click={() => dispatch('exportAll', { type: '1pdf' })}>
+    {$_('options.download_as.1pdf')}
+  </button>
   <h3>{$_('options.title')}</h3>
   <Collapsible header={$_('options.layout.title')}>
     <div class="labelvalue">

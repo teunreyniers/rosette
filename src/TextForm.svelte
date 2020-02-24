@@ -3,7 +3,7 @@
   import Collapsible from "./Collapsible.svelte";
   import DragInput from "./DragInput.svelte";
   import ColorSelector from "./ColorSelector.svelte";
-  import { _ } from 'svelte-i18n';
+  import { _ } from "svelte-i18n";
 
   export let textoptions;
 
@@ -14,9 +14,7 @@
       const payload = {
         ...textoptions
       };
-      payload[prop] = event.target
-        ? event.target.value
-        : event.detail.value;
+      payload[prop] = event.target ? event.target.value : event.detail.value;
       dispatch("textoptionschange", payload);
     };
   }
@@ -130,14 +128,14 @@
     </div>
     <div>
       <label>{$_('properties.curve')}</label>
-     <select value={textoptions.curve} on:change={handleInput('curve')}>
+      <select value={textoptions.curve} on:change={handleInput('curve')}>
         <option value="normal">{$_('properties.curve_normal')}</option>
         <option value="none">{$_('properties.curve_none')}</option>
       </select>
     </div>
-     <div>
+    <div>
       <label>{$_('properties.flip')}</label>
-     <select value={textoptions.flip} on:change={handleInput('flip')}>
+      <select value={textoptions.flip} on:change={handleInput('flip')}>
         <option value="none">{$_('properties.flip_none')}</option>
         <option value="horizontal">{$_('properties.flip_horizontal')}</option>
         <option value="vertical">{$_('properties.flip_vertical')}</option>

@@ -366,7 +366,7 @@
       if (action === "file") {
         workbook = detail.value;
         file.sheets = workbook.SheetNames;
-        const sheet = workbook.Sheets[file.sheets[0]]
+        const sheet = workbook.Sheets[file.sheets[0]];
         if (sheet && sheet["!ref"]) {
           const result = parseSheet(sheet);
           students = result.students;
@@ -439,7 +439,7 @@
         sections[detail.sectionindex].parts = sections[
           detail.sectionindex
         ].parts.filter((_, i) => detail.index != i);
-        sections = sections
+        sections = sections;
       } else if (action === "add") {
         sections[detail.sectionindex].parts = [
           ...sections[detail.sectionindex].parts,
@@ -451,7 +451,7 @@
             scores: Array(students.length).fill("")
           }
         ];
-        sections = sections
+        sections = sections;
       } else if (action === "name_change") {
         sections[detail.sectionindex].parts[detail.index] = {
           ...sections[detail.sectionindex].parts[detail.index],

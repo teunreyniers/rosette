@@ -391,7 +391,7 @@
       <h2>{$_('data_editor.title')}</h2>
       <button on:click={() => dispatch('close')}>
         {$_('data_editor.done')}
-      </button>      
+      </button>
     </div>
     <div class="options">
       <div>
@@ -402,7 +402,7 @@
           <option value="simple">Simple</option>
           <option value="normal">Normal</option>
           <option value="advanced">Advanced</option>
-        </select>        
+        </select>
       </div>
       {#if dataoptions.mode !== 'simple'}
         <label>Thresholds</label>
@@ -427,10 +427,12 @@
         </div>
       {/if}
       <input type="file" on:change={handleFile} />
-      <select value={file.selectedsheet} on:change={createChangeHandler("file", "selectedsheet")}>
-      {#each file.sheets as sheet}
-        <option>{sheet}</option>
-      {/each}
+      <select
+        value={file.selectedsheet}
+        on:change={createChangeHandler('file', 'selectedsheet')}>
+        {#each file.sheets as sheet}
+          <option>{sheet}</option>
+        {/each}
       </select>
     </div>
     <div class="students">
@@ -569,12 +571,10 @@
                     X
                   </button>
                 </div>
-
               </DraggablePanes>
             </div>
           </div>
         </DraggablePanes>
-
         <button
           class="add-section"
           title="Add section"

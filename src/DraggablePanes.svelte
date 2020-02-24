@@ -9,7 +9,6 @@
   export let scope = "default";
   export let scopeindex = 0;
 
-  // FLIP ANIMATION
   const [send, receive] = crossfade({
     duration: d => Math.sqrt(d * 200),
     fallback(node, params) {
@@ -25,7 +24,7 @@
       };
     }
   });
-  // DRAG AND DROP
+
   let isOver = false;
   let draggable = false;
   let dragindex = -1;
@@ -46,7 +45,6 @@
 
   const mouseup = e => {
     window.removeEventListener("mouseup", mouseup);
-
     isOver = false;
   };
   const handleMouseEnter = e => {
@@ -85,12 +83,12 @@
     const toscope = dragged.scopeindex;
     reorder({ from, to, fromscope, toscope });
   };
-  // DISPATCH REORDER
+
   const dispatch = createEventDispatcher();
   const reorder = ({ from, to, fromscope, toscope }) => {
     dispatch("sort", { from, to, fromscope, toscope });
   };
-  // UTILS
+
   const getKey = item => (key ? item[key] : item);
 </script>
 
