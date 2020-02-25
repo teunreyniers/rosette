@@ -41,6 +41,12 @@
     color: white;
   }
 
+  .logo span{
+    font-size: 0.5em;
+    text-transform: lowercase;
+  }
+
+
   select {
     background: transparent;
     color: white;
@@ -56,7 +62,7 @@
 </style>
 
 <nav>
-  <div href="/" class="logo">rosette</div>
+  <div href="/" class="logo">rosette<span>beta</span></div>
   <ul>
     <li on:click={() => (showAbout = true)}>{$_('about')}</li>
     <li on:click={() => (showPrivacy = true)}>{$_('privacy')}</li>
