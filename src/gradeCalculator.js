@@ -24,7 +24,7 @@ export function getDeviations(part, index, dataoptions) {
     return getIndexAdvanced(
       dataoptions.thresholds.map(e => parseFloat(e)),
       parseFloat(value) / parseFloat(part.tbs),
-      parseFloat(dataoptions.threshold)
+      parseFloat(part.threshold)
     );
   } else {
     return value;
