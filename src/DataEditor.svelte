@@ -395,17 +395,17 @@
     </div>
     <div class="options">
       <div>
-        <label>Mode</label>
+        <label>{$_('data_editor.mode')}</label>
         <select
           value={dataoptions.mode}
           on:change={createChangeHandler('dataoptions', 'modechange')}>
-          <option value="simple">Simple</option>
-          <option value="normal">Normal</option>
-          <option value="advanced">Advanced</option>
+          <option value="simple">{$_('data_editor.mode_simple')}</option>
+          <option value="normal">{$_('data_editor.mode_normal')}</option>
+          <option value="advanced">{$_('data_editor.mode_advanced')}</option>
         </select>
       </div>
       {#if dataoptions.mode !== 'simple'}
-        <label>Thresholds</label>
+        <label>{$_('data_editor.thresholds')}</label>
         <div class="thresholds">
           {#each dataoptions.thresholds as threshold, index}
             <input
@@ -438,10 +438,10 @@
     <div class="students">
       <div class="cell label" />
       {#if dataoptions.mode === 'normal' || dataoptions.mode === 'advanced'}
-        <div class="cell label">Max</div>
+        <div class="cell label">{$_('data_editor.max')}</div>
       {/if}
       {#if dataoptions.mode === 'advanced'}
-        <div class="cell label">Threshhold</div>
+        <div class="cell label">{$_('data_editor.threshold')}</div>
       {/if}
       {#each students as student, index (student.key)}
         <div class="cell">

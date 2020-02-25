@@ -1,9 +1,16 @@
 {
   "about": "about",
-  "about_msg": "<p>This site is created to make rosette's easy in bulk. A rosette is a visualisation for the result of a test. By visualising the different categories of the test a student can see witch parts are known and witch can still improve.</p><p>Currently this site is under construction</p>",
+  "about_msg": "<p>Rosette is a web application to make rosets. An easy way to display and communicate the result of a test to students. The different parts are displayed in circular diagram witch indicates how well the subject matter is known.</p> <p>This application offers an easy way to alter the layout and assist in calculating how good a part is known. Test results can be imported from a spreadsheet or csv.</p><p>Read our privacy policy to learn how your data is processed</p>",
   "data_editor": {
     "done": "Done",
+    "max": "Max",
+    "mode": "Mode",
+    "mode_advanced": "Advanced",
+    "mode_normal": "Normal",
+    "mode_simple": "Simple",
     "new_student": "new student",
+    "threshold": "Threshold",
+    "thresholds": "Thresholds",
     "title": "Records editor"
   },
   "language": "language",
@@ -54,7 +61,7 @@
   },
   "page_title": "Roset | Create your rosetts",
   "privacy": "privacy",
-  "privacy_msg": "<p>We value your privacy. Therefor no personal data is send to our servers. Even better all the data is procced localy on your machine. We don't track you and don't serve advertenties. This is possiple because the site run's on the free tier of Azure Web Services</p>",
+  "privacy_msg": "<p>We value your privacy. That is why no personal data is sent to our servers.  Even better, all data is stored locally on your machine. We do not track you or serve advertisements.</p><p>While this application grows and gains more features it is likely that this simple privacy approach is not covering, Therefor we feel free to change this at any time.</p>",
   "properties": {
     "align": "Align",
     "align_center": "Center",

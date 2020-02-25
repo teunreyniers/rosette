@@ -151,9 +151,7 @@
             on:mouseleave={() => (draggable = false)}>
             <slot name="dragger">...</slot>
           </div>
-          <slot {item} {index}>
-            <p>{getKey(item)}</p>
-          </slot>
+          <slot {item} {index}></slot>
         </li>
       {/each}
     {:else}

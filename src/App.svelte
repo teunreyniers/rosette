@@ -138,19 +138,6 @@
       ]
     },
     {
-      key: "dddddfsassdf",
-      name: "Science",
-      parts: [
-        {
-          key: "fasdfasfsad dfasdf",
-          name: "Chemistry",
-          scores: [4, 2, 3, 1],
-          tbs: 0,
-          threshold: 0
-        }
-      ]
-    },
-    {
       key: "dd9",
       name: "Languages",
       parts: [
@@ -171,7 +158,7 @@
         {
           key: "dddddfd",
           name: "German",
-          scores: [1, 2, 3, 5],
+          scores: [1, 2, 3, 2],
           tbs: 0,
           threshold: 0
         }
