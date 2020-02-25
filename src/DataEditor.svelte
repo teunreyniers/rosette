@@ -159,7 +159,7 @@
     border: none;
     border-radius: 2px;
     overflow: auto;
-    z-index: 200;
+    z-index: 50;
     display: grid;
     grid-template: "a a" auto "b b" auto "c d" 1fr / auto 1fr;
   }
