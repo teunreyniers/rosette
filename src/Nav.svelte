@@ -21,7 +21,7 @@
     background-blend-mode: darken;
   }
 
-  ul li {
+  nav ul li {
     margin: auto 10px;
     list-style-type: none;
     display: inline-block;
@@ -41,11 +41,10 @@
     color: white;
   }
 
-  .logo span{
+  .logo span {
     font-size: 0.5em;
     text-transform: lowercase;
   }
-
 
   select {
     background: transparent;
@@ -62,7 +61,10 @@
 </style>
 
 <nav>
-  <div href="/" class="logo">rosette<span>beta</span></div>
+  <div href="/" class="logo">
+    rosette
+    <span>beta</span>
+  </div>
   <ul>
     <li on:click={() => (showAbout = true)}>{$_('about')}</li>
     <li on:click={() => (showPrivacy = true)}>{$_('privacy')}</li>
@@ -81,9 +83,75 @@
   on:close={() => (showAbout = false)}
   background="sandybrown"
   sidepanel="salmon"
-  close="indianred" 
+  close="indianred"
   header={$_('about')}>
   {@html $_('about_msg')}
+  <a href="https://github.com/teunreyniers/rosette">Github</a>
+  <h4>Dependenties</h4>
+  <ul>
+    <li>
+      <a href="https://github.com/devongovett/blob-stream">blob-stream</a>
+      <a href="https://github.com/devongovett/blob-stream/blob/master/LICENSE">
+        MIT
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/canvg/canvg">canvg</a>
+      <a href="https://github.com/canvg/canvg/blob/master/LICENSE">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/eligrey/FileSaver.js">FileSaver.js</a>
+      <a href="https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md">
+        MIT
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/Stuk/jszip">jszip</a>
+      <a href="https://github.com/Stuk/jszip/blob/master/LICENSE.markdown">
+        MIT
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/moment/moment/">moment</a>
+      <a href="https://github.com/moment/moment/blob/develop/LICENSE">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/foliojs/pdfkit">pdfkit</a>
+      <a href="https://github.com/foliojs/pdfkit/blob/master/LICENSE">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/sveltejs/svelte">svelte</a>
+      <a href="https://github.com/sveltejs/svelte/blob/master/LICENSE">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/qintarp/svelte-color-picker">svelte-color-picker</a>
+      <a href="https://github.com/qintarp/svelte-color-picker/blob/master/LICENSE">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/kaisermann/svelte-i18n">svelte-i18n</a>
+      <a href="https://github.com/kaisermann/svelte-i18n/blob/master/LICENSE">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/alafr/SVG-to-PDFKit">svg-to-pdfkit</a>
+      <a href="https://github.com/alafr/SVG-to-PDFKit/blob/master/LICENSE">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/lukeed/polka">polka</a>
+      <a href="https://github.com/lukeed/polka/blob/master/license">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/expressjs/serve-static">serve-static</a>
+      <a href="https://github.com/expressjs/serve-static/blob/master/LICENSE">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/uuidjs/uuid">uuid</a>
+      <a href="https://github.com/uuidjs/uuid/blob/master/LICENSE.md">MIT</a>
+    </li>
+    <li>
+      <a href="https://github.com/SheetJS/sheetjs">xlsx</a>
+      <a href="https://github.com/SheetJS/sheetjs/blob/master/LICENSE">Apache License 2.0</a>
+    </li>
+  </ul>
 </InfoPopup>
 
 <InfoPopup
