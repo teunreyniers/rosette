@@ -1,6 +1,6 @@
 {
   "about": "about",
-  "about_msg": "<p>Rosette is a web application to make rosets. An easy way to display and communicate the result of a test to students. The different parts are displayed in circular diagram witch indicates how well the subject matter is known.</p> <p>This application offers an easy way to alter the layout and assist in calculating how good a part is known. Test results can be imported from a spreadsheet or csv.</p><p>Read our privacy policy to learn how your data is processed</p>",
+  "about_msg": "<p>Rosette is a web application to make rosettes. An easy way to display and communicate the result of a test to students. The different parts are displayed in a circular diagram witch indicates how well the subject matter is known.</p> <p>This application offers an easy way to alter the layout and assist in calculating how good a part is known. Test results can be imported from a spreadsheet or csv.</p>",
   "data_editor": {
     "done": "Done",
     "max": "Max",

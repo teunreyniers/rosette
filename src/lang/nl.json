@@ -1,6 +1,6 @@
 {
   "about": "over",
-  "about_msg": "<p>Rosette is een webapplicatie om rozetten te maken. Een eenvoudige manier om het resultaat van een test te visualiseren en aan de leerlingen te communiceren. De verschillende test onderdelen worden weergegeven in een cirkelvormig diagram dat aangeeft hoe goed het onderwerp bekend is.</p> <p>Deze applicatie biedt een eenvoudige manier om de lay-out te wijzigen en te helpen bij het berekenen van hoe goed een onderdeel bekend is. Toetsresultaten kunnen worden geïmporteerd uit een spreadsheet of csv.</p><p>Lees ons privacybeleid om te weten te komen hoe uw gegevens worden verwerkt.</p>",
+  "about_msg": "<p>Rosette is een webapplicatie om rozetten te maken. Een eenvoudige manier om het resultaat van een test te visualiseren en aan de leerlingen te communiceren. De verschillende test onderdelen worden weergegeven in een cirkelvormig diagram dat aangeeft hoe goed het onderwerp bekend is.</p> <p>Deze applicatie biedt een eenvoudige manier om de lay-out te wijzigen en te helpen bij het berekenen van hoe goed een onderdeel bekend is. Toetsresultaten kunnen worden geïmporteerd uit een spreadsheet of csv.</p>",
   "data_editor": {
     "done": "Klaar",
     "max": "Max",
