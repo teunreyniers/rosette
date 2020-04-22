@@ -16,9 +16,7 @@ locale.subscribe(value => {
 
 init({
 	fallbackLocale: 'en-US',
-	initialLocale: {
-		navigator: lang !== undefined,
-	},
+	initialLocale: lang,
 })
 
 if (lang) {
