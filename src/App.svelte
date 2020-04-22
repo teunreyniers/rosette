@@ -255,7 +255,7 @@
         grades = grades.filter((_, i) => detail.index != i);
         break;
       case "add":
-        grades = [{ key: uuidv4(), value: "#ffffff" }, ...grades];
+        grades = [{ key: uuidv4(),  color: "#eeeeee", name: "" }, ...grades];
         break;
       case "change":
         grades[detail.index] = detail.value;
@@ -395,6 +395,7 @@
             name: detail.value
           }
         ];
+        
       }
     } else if (target === "sections") {
       if (action === "reorder") {

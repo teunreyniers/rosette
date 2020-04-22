@@ -314,7 +314,7 @@
       </div>
     </DraggableList>
     <button
-      on:click={e => dispatch('colorChange', { action: 'add', index: 0 })}>
+      on:click={e => dispatch('gradechange', { action: 'add', index: 0 })}>
       {$_('options.color_and_grades.add_color')}
     </button>
   </Collapsible>

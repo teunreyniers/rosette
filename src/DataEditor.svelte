@@ -377,12 +377,6 @@
   .options label {
     margin: auto 2px;
   }
-
-  .filedropper {
-    height: 100px;
-    width: 100px;
-    background: red;
-  }
 </style>
 
 {#if sections && students}
@@ -465,7 +459,7 @@
         <DraggablePanes
           list={sections}
           key="key"
-          scope="section"
+          scope="secnption"
           let:item={section}
           let:index={sectionindex}
           on:sort={createPassthroughHandler('sections', 'reorder')}>
