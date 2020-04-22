@@ -5,13 +5,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "browser": "browserify --standalone PDFDocument node_modules/pdfkit/js/pdfkit.js > ./libs/pdfkit.js",
-<<<<<<< HEAD
     "build": "npm run browser & rollup -c",
     "dev": "npm run browser & rollup -c -w",
-=======
-    "build": "browser & rollup -c",
-    "dev": "browser & rollup -c -w",
->>>>>>> 8c84ca7a6bc4896b35d11e5fcfa1f0a61fde54a6
     "start": "node index.js",
     "test": "jest"
   },
