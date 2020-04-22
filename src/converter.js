@@ -1,5 +1,5 @@
 import JSZip from "jszip";
-import PDFDocument from "./libs/pdfkit.standalone";
+import PDFDocument from "../libs/pdfkit";
 import SVGtoPDF from "svg-to-pdfkit";
 import blobStream from "blob-stream";
 import FileSaver from "file-saver";
