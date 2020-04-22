@@ -34,15 +34,19 @@ export default {
 		// consult the documentation for details:
 		// https://github.com/rollup/plugins/tree/master/packages/commonjs
 		
+		
 		resolve({
 			browser: true,
-			dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
+			dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/'),
+			preferBuiltins: true
 		}),
 
+		
 		commonjs(),
 		globals(),
 		builtins(),
 		json(),
+		
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
 		!production && serve(),
