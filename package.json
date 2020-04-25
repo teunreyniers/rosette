@@ -11,10 +11,10 @@
     "dev:browser": "npm run browser & npm run dev",
     "start": "node index.js",
     "test": "jest src",
-    "test:coverage": "jest src --collect-coverage",
     "test:watch": "npm run test -- --watch",
-    "lint": "eslint --fix src",
-    "prettier": "prettier --write src/**/*.js"
+    "test:coverage": "jest --coverage",
+    "coverage": "jest --coverage --coverageReporters=cobertura",
+    "lint": "eslint --fix src"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
