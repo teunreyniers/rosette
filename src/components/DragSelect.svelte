@@ -76,6 +76,7 @@
 </style>
 
 <select
+  data-testid="select"
   bind:this={select}
   class:isDragging
   class:canDrag={!hasFocus}

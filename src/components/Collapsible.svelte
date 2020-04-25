@@ -49,6 +49,8 @@
 
 {#if isOpen}
   <div transition:slide>
-    <slot />
+    <slot>
+      <p>Empty slot</p>
+    </slot>
   </div>
 {/if}

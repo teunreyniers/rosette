@@ -4,6 +4,7 @@
   import { slide } from "svelte/transition";
   import { _ } from "svelte-i18n";
   import XLSX from "xlsx";
+  import { findParent, findNodeIndex } from "../helpers/nodes"
 
   export let students;
   export let sections;
@@ -37,30 +38,19 @@
     };
   }
 
-  function findParent(node, type) {
-    if (node.localName === type) {
-      return node;
-    }
-    return findParent(node.parentNode, type);
-  }
-
-  function findCellIndex(node) {
-    const cell = node.parentNode;
-    const cellparent = cell.parentNode;
-    return Array.prototype.indexOf.call(cellparent.children, cell);
+  function findCellIndex(cell){
+    return findNodeIndex(cell.parentNode)
   }
 
   function findPartIndex(node) {
     const part = findParent(node, "li");
-    const partparent = part.parentNode;
-    return Array.prototype.indexOf.call(partparent.children, part);
+    return findNodeIndex(part)
   }
 
   function findSectionIndex(node) {
     const partparent = findParent(node, "ul");
     const section = findParent(partparent.parentNode, "li");
-    const sectionparent = section.parentNode;
-    return Array.prototype.indexOf.call(sectionparent.children, section);
+    return findNodeIndex(section)
   }
 
   function getCell(cellindex, partindex, sectionindex) {

@@ -56,14 +56,14 @@ export function parseSheet(sheet, options = undefined) {
     thresholdrow,
     datarow,
     datacol,
-    studentcol
+    studentcol,
   } = {
     ...options,
     sectionsrow: (options && options.sectionsrow) || 0,
     partrow: (options && options.partrow) || 1,
     datarow: (options && options.datarow) || 2,
     datacol: (options && options.datacol) || 1,
-    studentcol: (options && options.studentcol) || 0
+    studentcol: (options && options.studentcol) || 0,
   };
 
   sheet = sheetToArray(sheet);
@@ -72,26 +72,26 @@ export function parseSheet(sheet, options = undefined) {
   for (let i = datacol; i < sheet[0].length; i++) {
     if (!collector[sheet[sectionsrow][i].v]) {
       collector[sheet[sectionsrow][i].v] = {
-        parts: []
+        parts: [],
       };
     }
     collector[sheet[sectionsrow][i].v].parts.push({
       key: uuidv4(),
       name: sheet[partrow][i].v,
-      scores: sheet.slice(datarow).map(r => r[i].v),
+      scores: sheet.slice(datarow).map((r) => r[i].v),
       tbs: tbsrow ? sheet[tbsrow][i].v : 0,
-      threshold: thresholdrow ? sheet[thresholdrow][i].v : 0
+      threshold: thresholdrow ? sheet[thresholdrow][i].v : 0,
     });
   }
 
   const sections = Object.entries(collector).map(([key, value]) => ({
     key: uuidv4(),
     name: key,
-    ...value
+    ...value,
   }));
-  const students = sheet.slice(datarow).map(r => ({
+  const students = sheet.slice(datarow).map((r) => ({
     key: uuidv4(),
-    name: r[studentcol].v
+    name: r[studentcol].v,
   }));
 
   return { students, sections };

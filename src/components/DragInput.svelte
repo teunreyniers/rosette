@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { round, limit, floor2zero } from "../helpers/math";
 
   export let value = "";
   export let size = "";
@@ -10,7 +11,7 @@
   export let min = 0;
   export let max = Infinity;
   export let sensitivity = step;
-  export let finest = 1000;
+  export let finest = 3;
 
   const dispatch = createEventDispatcher();
   let input;
@@ -23,18 +24,6 @@
     isMousedown = true;
     window.addEventListener("mousemove", handleMousemove);
     window.addEventListener("mouseup", handleMouseup);
-  }
-
-  function round(x, decimal) {
-    return Math.round(x * decimal) / decimal;
-  }
-
-  function limit(min, max, x) {
-    return Math.min(max, Math.max(min, x));
-  }
-
-  function takestep(x, size) {
-    return Math.sign(x) * Math.floor(Math.abs(x) / size) * size;
   }
 
   function handleChange(event) {
@@ -54,12 +43,12 @@
         size = smallstep;
       } else if (event.ctrlKey) {
         size = 1;
-        decimal = 1;
+        decimal = 0;
       }
       change += (event.movementX * sensitivity * size) / step;
       if (Math.abs(change) > size) {
         dispatchChangeEvent(
-          (parseFloat(value) || defaultValue) + takestep(change, size),
+          (parseFloat(value) || defaultValue) + floor2zero(change, size),
           decimal
         );
         change %= step;
@@ -67,7 +56,7 @@
     }
   }
 
-  function handleMouseup(event) {
+  function handleMouseup(event) {  
     if (!event.ctrlKey && !event.shiftKey) {
       hasFocus = true;
     }
@@ -91,8 +80,8 @@
   }
 
   function handleKeydown(event) {
-    if(event.key === 'Enter'){
-      input.blur()
+    if (event.key === "Enter") {
+      input.blur();
     }
   }
 
@@ -114,6 +103,7 @@
 </style>
 
 <input
+  data-testid="input"
   readonly={isDragging}
   class:isDragging
   class:canDrag={!hasFocus}
@@ -123,5 +113,5 @@
   on:change={handleChange}
   on:input
   on:mousedown={handleMousedown}
-  on:focusout={handleFocusout} 
-  on:keydown={handleKeydown}/>
+  on:focusout={handleFocusout}
+  on:keydown={handleKeydown} />

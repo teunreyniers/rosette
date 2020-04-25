@@ -3,7 +3,7 @@ import {
   createReference,
   getAlpha,
   sheetToArray,
-  parseSheet
+  parseSheet,
 } from "./dataparser";
 
 test("parseReference of B3 should be row: 3, col:2", () => {
@@ -40,11 +40,11 @@ test("sheetToArray 2x2", () => {
     "!ref": "B3:C4",
     B3: 1,
     C3: 3,
-    C4: 4
+    C4: 4,
   };
   const result = [
     [1, 3],
-    ["", 4]
+    ["", 4],
   ];
   expect(sheetToArray(sheet)).toEqual(result);
 });
@@ -61,7 +61,7 @@ test("parse sheet example", () => {
     B3: 1,
     B4: 2,
     C3: 3,
-    C4: 4
+    C4: 4,
   };
   const { students, sections } = parseSheet(sheet);
   expect(students).toHaveLength(2);

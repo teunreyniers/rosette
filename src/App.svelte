@@ -1,13 +1,13 @@
 <script>
   import { _ } from "svelte-i18n";
 
-  import Grid from "./Grid.svelte";
-  import Rosette from "./Rosette.svelte";
-  import Options from "./Options.svelte";
-  import Nav from "./Nav.svelte";
-  import DataEditor from "./DataEditor.svelte";
+  import Grid from "./components/Grid.svelte";
+  import Rosette from "./components/Rosette.svelte";
+  import Options from "./components/Options.svelte";
+  import Nav from "./components/Nav.svelte";
+  import DataEditor from "./components/DataEditor.svelte";
   import { onMount, tick } from "svelte";
-  import { move } from "./utils";
+  import { move } from "./helpers/array";
   import { getSectionByIndex } from "./gradeCalculator";
   import { createPdf, createZip } from "./converter";
   import { v4 as uuidv4 } from "uuid";

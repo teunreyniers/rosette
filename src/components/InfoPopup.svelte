@@ -96,7 +96,7 @@
       in:fly={{ x: -200, duration: 400 }}
       out:fly={{ y: 200, duration: 400 }}
       class="container">
-      <span class="close" style="background: {close}" on:click={handleClick} />
+      <span class="close" data-testid="close-button" style="background: {close}" on:click={handleClick} />
       <div class="side-image" style="background: {sidepanel}" />
       <div class="content">
         <h1>{header}</h1>

@@ -7,6 +7,7 @@
 
   export let label;
   export let index;
+  export let defaultState = false;
 
   const dispatch = createEventDispatcher();
 
@@ -82,7 +83,7 @@
   }
 </style>
 
-<Collapsible reverse defaultState={false}>
+<Collapsible reverse {defaultState}>
   <button slot="collapser" class="collapser" let:isOpen>
     <span class:isOpen>></span>
   </button>

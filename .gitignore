@@ -3,3 +3,4 @@
 /libs/*
 !/libs/.gitkeep
 .DS_Store
+/coverage/

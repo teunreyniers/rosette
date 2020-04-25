@@ -21,6 +21,10 @@
     background-blend-mode: darken;
   }
 
+  nav ul li a{
+    color: white
+  }
+
   nav ul li {
     margin: auto 10px;
     list-style-type: none;
@@ -68,6 +72,7 @@
   <ul>
     <li on:click={() => (showAbout = true)}>{$_('about')}</li>
     <li on:click={() => (showPrivacy = true)}>{$_('privacy')}</li>
+    <li><a href="https://github.com/teunreyniers/rosette" target="_blank">Github</a></li>
     <li>
       <select bind:value={$locale}>
         {#each $locales as locale}
