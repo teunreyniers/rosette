@@ -40,7 +40,13 @@ stages:
         npm run browser --if-present
         npm run build --if-present
         npm run test --if-present
-      displayName: 'npm install, build and test'
+        npm run coverage --if-present
+      displayName: 'npm install, build, test and output coverage'
+
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
       
     - task: ArchiveFiles@2
       displayName: 'Archive files'
