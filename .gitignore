@@ -1,6 +1,0 @@
-/node_modules/
-/public/build/
-/libs/*
-!/libs/.gitkeep
-.DS_Store
-/coverage/
