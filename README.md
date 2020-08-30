@@ -1,6 +1,6 @@
 # Rosette
 
-A live example version can be found at https://rosette.azurewebsites.net/
+A live example version can be found at https://teunreyniers.github.io/rosette/
 
 ## About
 
