@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { render, fireEvent, act } from "@testing-library/svelte";
 import Nav from "./Nav.svelte";
 import { init, addMessages } from "svelte-i18n";

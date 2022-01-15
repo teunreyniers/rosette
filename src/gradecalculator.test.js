@@ -1,4 +1,8 @@
-import {
+/**
+ * @jest-environment jsdom
+ */
+
+ import {
   getDeviations,
   getIndexNormal,
   getIndexAdvanced,

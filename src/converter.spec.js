@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { pdfzip, pdf, svgzip } from "./converter";
 
 describe("pdfzip", () => {

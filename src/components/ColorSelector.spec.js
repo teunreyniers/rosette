@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { render } from "@testing-library/svelte";
 import ColorSelector from "./ColorSelector.svelte";
 

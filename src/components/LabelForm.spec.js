@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { render, fireEvent } from "@testing-library/svelte";
 import LabelForm from "./LabelForm.svelte";
 import { init, addMessages } from "svelte-i18n";

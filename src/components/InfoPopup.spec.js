@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { render, fireEvent, act } from "@testing-library/svelte";
 import InfoPopup from "./InfoPopup.svelte";
 

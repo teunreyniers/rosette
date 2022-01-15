@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { render, act, fireEvent } from "@testing-library/svelte";
 import DragInput from "./DragInput.svelte";
 

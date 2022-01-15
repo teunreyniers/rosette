@@ -6,6 +6,8 @@ import { terser } from 'rollup-plugin-terser';
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 import json from '@rollup/plugin-json'
+import css from 'rollup-plugin-css-only';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -15,38 +17,41 @@ export default {
 		sourcemap: !production,
 		format: 'iife',
 		name: 'app',
-		file: 'public/build/bundle.js'
+		file: 'public/build/bundle.js',
 	},
 	plugins: [
 		svelte({
-			// enable run-time checks when not in production
-			dev: !production,
-			// we'll extract any component CSS out into
-			// a separate file — better for performance
-			css: css => {
-				css.write('bundle.css');
+			compilerOptions: {
+				// enable run-time checks when not in production
+				dev: !production
 			}
 		}),
-
+		// we'll extract any component CSS out into
+		// a separate file - better for performance
+		css({ output: 'bundle.css' }),
+		
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration —
 		// consult the documentation for details:
 		// https://github.com/rollup/plugins/tree/master/packages/commonjs
 		
+		commonjs(),
+		nodePolyfills(),
+		globals(),
+		builtins({ browser: true }),
+		json(),
 		
 		resolve({
 			browser: true,
 			dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/'),
 			preferBuiltins: true
 		}),
+		
+		
+		
+		
 
-		
-		commonjs(),
-		globals(),
-		builtins(),
-		json(),
-		
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
 		!production && serve(),

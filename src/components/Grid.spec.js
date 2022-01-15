@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { render, act, fireEvent } from "@testing-library/svelte";
 import Grid from "./Grid.svelte";
 
@@ -17,7 +21,7 @@ describe("grid component", () => {
         { key: 3, name: "by key" },
       ],
     });
-    expect(container).toContainHTML("<div>");
+    expect(container).toContainHTML("")
   });
 
   it("should zoom out on scroll down", async () => {

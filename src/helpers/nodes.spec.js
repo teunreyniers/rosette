@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { findParent, findNodeIndex } from "./nodes";
 
 describe("function findParent", () => {
