@@ -61,7 +61,7 @@ describe("LabelForm component", () => {
     let value;
     const input = getByDisplayValue(label.value);
 
-    component.$on("labelchange", (e) => (value = e.detail.label.value));
+    component.$on("change", (e) => (value = e.detail.value));
 
     await fireEvent.change(input, { target: { value: "my value" } });
 

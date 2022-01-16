@@ -14,7 +14,7 @@ test("test getDeviations", () => {
       {
         key: "dd1",
         name: "Fysics",
-        scores: [1, 2, 3, 4],
+        scores: [{value:1}, {value:2}, {value:3}, {value:4}],
         tbs: 4,
         threshold: 0.6,
       },
