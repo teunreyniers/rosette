@@ -87,13 +87,11 @@
     ev.preventDefault();
     const local_scope = ev.dataTransfer.getData("scope");
     const dragged = getDraggedParent(ev.target, local_scope);
-    console.log({scope, local_scope});
     if (scope !== local_scope) return;
     const from = ev.dataTransfer.getData("source");
     const fromscope = ev.dataTransfer.getData("scopeindex");
     const toscope = dragged.scopeindex;
     const to = parseInt(dragged.index) + (fromscope !== toscope);
-    console.log({ from, to, fromscope, toscope });
     reorder({ from, to, fromscope, toscope });
   };
 

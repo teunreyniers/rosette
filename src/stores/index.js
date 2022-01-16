@@ -325,8 +325,6 @@ for (let section of default_sections) {
   }
 }
 
-console.log(default_results);
-
 const baseResultsStore = createResultBaseStore(default_results)
 
 export const results = deriveInherit(baseResultsStore, [students, sections], resultsStore, [])
