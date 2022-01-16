@@ -14,14 +14,14 @@
   function handleInput(prop) {
     return event => {
       const payload = {
-        action: "change",
-        label,
-        index
-      };
-      payload.label[prop] = event.target
+        action: "update",
+        key: label.key,
+        path: prop,
+        value: event.target
         ? event.target.value
-        : event.detail.value;
-      dispatch("labelchange", payload);
+        : event.detail.value
+      }
+      dispatch("change", payload);
     };
   }
 </script>
@@ -146,10 +146,9 @@
   {#if !label.readonly}
     <button
       class="remove"
-      on:click={() => dispatch('labelchange', {
+      on:click={() => dispatch('change', {
           action: 'delete',
-          label,
-          index
+          key: label.key,
         })}>
       {$_('properties.remove')}
     </button>

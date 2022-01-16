@@ -28,6 +28,7 @@
       ? node.dataset
       : getDraggedParent(node.parentNode);
   const start = ev => {
+    if (!ev.target.dataset) return 
     ev.dataTransfer.setData("source", ev.target.dataset.index);
     dragindex = ev.target.dataset.index;
   };
@@ -118,10 +119,10 @@
           on:mouseleave={() => (draggable = false)}>
           ...
         </span>
-        <slot {item} {index}>
+        <slot {item} key={getKey(item)} {index}>
           <p>{getKey(item)}</p>
         </slot>
-        <span class="delete" on:click={() => dispatch('delete', index)}>X</span>
+        <span class="delete" on:click={() => dispatch('delete', {index, item})}>X</span>
       </li>
     {/each}
   </ul>

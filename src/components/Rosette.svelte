@@ -44,6 +44,7 @@
   $: raduises = [...Array(spaces.length + 2).keys()].map(
     d => (sumUntil(spaces, d) / totalspace) * scale_factor
   );
+  
 
   function getCoordinate(radius, partnumber, angleoffset) {
     const angle = (2 * Math.PI * partnumber) / count + angleoffset;
@@ -95,6 +96,7 @@
     offset,
     angleoffset
   ) {
+    
     const angle =
       (2 *
         Math.PI *

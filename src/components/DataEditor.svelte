@@ -5,9 +5,10 @@
   import { _ } from "svelte-i18n";
   import XLSX from "xlsx";
   import { findParent, findNodeIndex } from "../helpers/nodes"
+  import {students, sections, results } from "../stores"
+  import {get} from 'svelte/store'
 
-  export let students;
-  export let sections;
+
   export let dataoptions;
   export let file;
 
@@ -90,7 +91,7 @@
 
       let newcell;
       partindex += event.shiftKey ? -1 : 1;
-      while (!newcell && sectionindex < sections.length && sectionindex >= 0) {
+      while (!newcell && sectionindex < get(sections).length && sectionindex >= 0) {
         newcell = getCell(cellindex, partindex, sectionindex);
         sectionindex += event.shiftKey ? -1 : 1;
         partindex = event.shiftKey ? countPart(sectionindex) - 1 : 0;
@@ -136,6 +137,125 @@
     };
     reader.readAsArrayBuffer(f);
   }
+
+
+//   function handleDatachange({ detail }) {
+//     const { target, action } = detail;
+//     if (target === "file") {
+//       if (action === "file") {
+//         workbook = detail.value;
+//         file.sheets = workbook.SheetNames;
+//         const sheet = workbook.Sheets[file.sheets[0]];
+//         if (sheet && sheet["!ref"]) {
+//           const result = parseSheet(sheet);
+//     //      students = result.students;
+//  //         sections = result.sections;
+//         }
+//       } else if (action === "selectedsheet") {
+//         file.selectedsheet = detail.value;
+//         const sheet = workbook.Sheets[file.selectedsheet];
+//         if (sheet && sheet["!ref"]) {
+//           const result = parseSheet(sheet);
+// //          students = result.students;
+//  //         sections = result.sections;
+//         }
+//       }
+//     } else if (target === "dataoptions") {
+//       if (action === "modechange") {
+//         dataoptions.mode = detail.value;
+//       } else if (action === "change_threshold") {
+//         dataoptions.thresholds[detail.index] = detail.value;
+//         dataoptions.thresholds = dataoptions.thresholds.filter(e => e !== "");
+//       } else if (action === "add_threshold") {
+//         dataoptions.thresholds = [...dataoptions.thresholds, detail.valuef];
+//       }
+//     } else if (target === "students") {
+//       if (action === "change") {
+//         students[detail.index].name = detail.value;
+//       } else if (action == "add") {
+//         // sections = sections.map(section => ({
+//         //   ...section,
+//         //   parts: section.parts.map(part => ({
+//         //     ...part,
+//         //     scores: [...part.scores, 0]
+//         //   }))
+//         // }));
+//         // students = [
+//         //   ...students,
+//         //   {
+//         //     key: uuidv4(),
+//         //     name: detail.value
+//         //   }
+//         // ];
+        
+//       }
+//     } else if (target === "sections") {
+//       if (action === "reorder") {
+//        // sections = move(sections, detail.from, detail.to);
+//       } else if (action === "delete") {
+//     //    sections = sections.filter((_, i) => detail.index != i);
+//       } else if (action === "add") {
+//         // sections = [
+//         //   ...sections,
+//         //   { key: uuidv4(), name: "new section", parts: [] }
+//         // ];
+//       } else if (action === "change") {
+//       //  sections[detail.index].name = detail.value;
+//       }
+//     } else if (target === "parts") {
+//       if (action === "reorder") {
+//         const { from, to, fromscope, toscope } = detail;
+//         const item = sections[fromscope].parts[from];
+//         // sections[fromscope].parts = sections[fromscope].parts.filter(
+//         //   (_, i) => from != i
+//         // );
+//         const arr = sections[toscope].parts;
+//         sections[toscope].parts = [
+//           ...arr.slice(0, to),
+//           item,
+//           ...arr.slice(to, arr.length)
+//         ];
+//       } else if (action === "delete") {
+//         // sections[detail.sectionindex].parts = sections[
+//         //   detail.sectionindex
+//         // ].parts.filter((_, i) => detail.index != i);
+//         // sections = sections;
+//       } else if (action === "add") {
+//         sections[detail.sectionindex].parts = [
+//           ...sections[detail.sectionindex].parts,
+//           {
+//             key: uuidv4(),
+//             name: "<name>",
+//             tbs: "",
+//             threshold: "",
+//             scores: Array(students.length).fill("")
+//           }
+//         ];
+//         // sections = sections;
+//       } else if (action === "name_change") {
+//         sections[detail.sectionindex].parts[detail.index] = {
+//           ...sections[detail.sectionindex].parts[detail.index],
+//           name: detail.value
+//         };
+//       //  sections = sections;
+//       } else if (action === "cell_change") {
+//         sections[detail.sectionindex].parts[detail.index].scores[
+//           detail.cellindex
+//         ] = detail.value;
+//       //  sections = sections;
+//       } else if (action === "tbs_change") {
+//         sections[detail.sectionindex].parts[detail.index] = {
+//           ...sections[detail.sectionindex].parts[detail.index],
+//           tbs: detail.value
+//         };
+//       } else if (action === "threshold_change") {
+//         sections[detail.sectionindex].parts[detail.index] = {
+//           ...sections[detail.sectionindex].parts[detail.index],
+//           threshold: detail.value
+//         };
+//       }
+//     }
+//   }
 </script>
 
 <style>
@@ -369,7 +489,6 @@
   }
 </style>
 
-{#if sections && students}
   <div class="container" transition:slide>
     <div class="header">
       <h2>{$_('data_editor.title')}</h2>
@@ -427,32 +546,32 @@
       {#if dataoptions.mode === 'advanced'}
         <div class="cell label">{$_('data_editor.threshold')}</div>
       {/if}
-      {#each students as student, index (student.key)}
+      {#each $students as student (student.key)}
         <div class="cell">
           <input
             size="1"
             title={student.name}
             value={student.name}
-            on:change={createChangeHandler('students', 'change', { index })} />
+            on:change={students.handleUpdate(student.key, 'name')} />
         </div>
       {/each}
       <div class="cell newstudent">
         <input
           size="1"
           placeholder={$_('data_editor.new_student')}
-          on:change={createChangeHandler('students', 'add')}
+          on:change={e => students.do('add', { data: {name: e.target.value} })}
           on:change={clearValue} />
       </div>
     </div>
     <div class="scroll">
       <div class="data" bind:this={dataNode}>
         <DraggablePanes
-          list={sections}
+          list={$results}
           key="key"
-          scope="secnption"
+          scope="sections"
           let:item={section}
           let:index={sectionindex}
-          on:sort={createPassthroughHandler('sections', 'reorder')}>
+          on:sort={e => sections.do('reorder', e.detail)}>
           <span slot="dragger" class="dragger">...</span>
           <span slot="delete" />
           <div class="section">
@@ -460,9 +579,7 @@
               <button
                 title="remove section"
                 class="section-button red"
-                on:click={createChangeHandler('sections', 'delete', {
-                  index: sectionindex
-                })}>
+                on:click={_ => sections.do('delete', {key: section.key})}>
                 X
               </button>
               <input
@@ -470,15 +587,11 @@
                 size="1"
                 title={section.name}
                 value={section.name}
-                on:change={createChangeHandler('sections', 'change', {
-                  index: sectionindex
-                })} />
+                on:change={sections.handleUpdate(section.key, 'name')} />
               <button
                 title="add part"
                 class="section-button green"
-                on:click={createChangeHandler('parts', 'add', {
-                  sectionindex
-                })}>
+                on:click={_ => sections.do('add', { key: section.key, path: 'parts', data: 'part' })}>
                 +
               </button>
             </div>
@@ -490,7 +603,7 @@
                 scopeindex={sectionindex}
                 let:item={part}
                 let:index={partindex}
-                on:sort={createPassthroughHandler('parts', 'reorder')}>
+                on:sort={e => sections.do('reorder', { ...e.detail, path: 'parts'} )}>
                 <span slot="dragger" class="dragger">...</span>
                 <span class="empty-delete" slot="delete" />
                 <div class="part">
@@ -499,10 +612,7 @@
                       size="1"
                       title={part.name}
                       value={part.name}
-                      on:change={createChangeHandler('parts', 'name_change', {
-                        index: partindex,
-                        sectionindex
-                      })}
+                      on:change={sections.handleUpdate([section.key, part.key], ['parts', 'name'])}
                       on:keydown={tabstop} />
                   </div>
                   {#if dataoptions.mode === 'normal' || dataoptions.mode === 'advanced'}
@@ -510,10 +620,7 @@
                       <input
                         size="1"
                         value={part.tbs}
-                        on:change={createChangeHandler('parts', 'tbs_change', {
-                          index: partindex,
-                          sectionindex
-                        })}
+                        on:change={sections.handleUpdate([section.key, part.key], ['parts', 'tbs'])}
                         on:keydown={tabstop} />
                     </div>
                   {/if}
@@ -522,36 +629,22 @@
                       <input
                         size="1"
                         value={part.threshold}
-                        on:change={createChangeHandler(
-                          'parts',
-                          'threshold_change',
-                          {
-                            index: partindex,
-                            sectionindex
-                          }
-                        )}
+                        on:change={sections.handleUpdate([section.key, part.key], ['parts', 'threshold'])}
                         on:keydown={tabstop} />
                     </div>
                   {/if}
-                  {#each part.scores as score, cellindex}
+                  {#each part.scores as score}
                     <div class="cell">
                       <input
                         size="1"
-                        value={score}
-                        on:change={createChangeHandler('parts', 'cell_change', {
-                          index: partindex,
-                          cellindex,
-                          sectionindex
-                        })}
+                        value={score.value}
+                        on:change={results.handleUpdate(score.student.key,part.key)}
                         on:keydown={tabstop} />
                     </div>
                   {/each}
                   <button
                     class="part-button red"
-                    on:click={createChangeHandler('parts', 'delete', {
-                      index: partindex,
-                      sectionindex
-                    })}>
+                    on:click={_ => sections.do('delete', { key: [section.key, part.key], path: 'parts'})}>
                     X
                   </button>
                 </div>
@@ -562,10 +655,9 @@
         <button
           class="add-section"
           title="Add section"
-          on:click={createChangeHandler('sections', 'add')}>
+          on:click={_ => sections.do('add')}>
           +
         </button>
       </div>
     </div>
   </div>
-{/if}

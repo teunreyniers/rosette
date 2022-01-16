@@ -13,7 +13,7 @@ export function getSectionByIndex(sections, index, dataoptions) {
 }
 
 export function getDeviations(part, index, dataoptions) {
-  const value = part.scores[index];
+  const value = part.scores[index].value;
   if (value === "") return undefined;
   if (dataoptions.mode === "normal") {
     return getIndexNormal(
